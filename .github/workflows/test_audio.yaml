@@ -90,12 +90,15 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-
     - name: Restore Latest Pack Build from Cache
       uses: actions/cache/restore@v4
       with:
          path: ${{ github.workspace }}/output
          key: latest-cmsis-mlek-pack
+
+    - name: Diagnosis 1 of ${{ github.workspace }}
+      run: |
+        tree -L 3
 
     - name: Install tools
       uses: ARM-software/cmsis-actions/vcpkg@v1
@@ -128,6 +131,12 @@ jobs:
       with:
         key: cmsis-mlek-download
         path: /home/runner/.cache/arm/packs/.Download
+
+    - name: Diagnosis 2 of ${{ github.workspace }}
+      working-directory: /home/runner/.cache/arm/packs/.Download
+      run: |
+        tree -L 2
+        exit 1
 
     - name: AC6-Build-Test 4 context ${{matrix.context.proj}}.${{matrix.context.build_type}}+${{matrix.context.target_type}}
       working-directory: ./template/audio
