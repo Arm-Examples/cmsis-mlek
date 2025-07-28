@@ -30,7 +30,6 @@ found in the [CMSIS-Driver Manual](https://arm-software.github.io/CMSIS_6/latest
 This example uses a neural network model that specialises in detecting human faces in images.
 The input size for these images is 192x192 (monochrome) and the smallest face that can be detected is of size 20x20. The output of the application will be co-ordinates for rectangular bounding boxes for each detection.
 
-![Object_Detection](images/object_detection.png)
 
 ### Build Types
 The Object Detection example defines four build types that control debug information and the video source:

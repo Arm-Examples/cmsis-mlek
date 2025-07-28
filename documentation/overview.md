@@ -1,73 +1,55 @@
 # Overview
 
-<!-- markdownlint-disable MD013 -->
-<!-- markdownlint-disable MD036 -->
+The **Machine Learning Evaluation Kit (MLEK)** pack contains [CMSIS Reference Applications](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/) and templates for Edge AI development with embedded systems. These applications implement data preprocessing, memory management, and neural network inference pipelines that are optimized for Cortex-M and Ethos-U platforms.
 
-The CMSIS-MLEK (Machine Learning Evaluation Kit) Templates Package provides ready-to-use reference applications and templates for developing machine learning applications on Arm Cortex-M processors with Ethos-U NPUs. These templates accelerate the development of Edge AI applications by providing complete, working examples that demonstrate best practices for ML inference on embedded systems.
+Key Features:
 
-![MLEK Templates Architecture](images/MLEK-Architecture.png)
+- **Rapid Prototyping**: Get working ML applications running quickly with minimal setup.
+- **Algorithm Development**: Use example code as design patterns for custom ML algorithm implementation.
+- **Model Integration**: Easily swap in custom TensorFlow Lite models with minimal code changes.
+- **Performance Validation**: Test and optimize ML performance on target hardware or simulation.
+- **Hardware Evaluation**: Compare performance across different Corstone platforms and configurations.
 
-The MLEK templates are designed to support the complete machine learning development workflow on embedded systems:
+MLEK covers three main application domains:
 
-- **Rapid Prototyping**: Get started quickly with pre-configured ML applications for common use cases
-- **Algorithm Development**: Use templates as a foundation for developing custom ML algorithms
-- **Performance Optimization**: Leverage optimized implementations for Cortex-M and Ethos-U platforms
-- **Hardware Validation**: Test and validate ML models on both simulation and physical hardware
-- **MLOps Integration**: Connect to modern ML development pipelines and workflows
+- [Audio](todo-link-to-docu) processing with audio classification and keyword spotting.
+- [Video](todo-link-to-docu) processing with image classification and object detection.
+- [Generic](todo-link-to-docu) inference for flexible ML model deployment.
 
-## Template Categories
+Each reference applications is a *csolution project* which supports deployment to physical hardware or Arm Virtual Hardware (AVH-FVP) for simulation.
 
-The MLEK package includes three main categories of templates, each targeting different ML application domains:
+![MLEK Reference Application Architecture](./images/MLEK-Architecture.png)
 
-### Audio Processing Templates
+A board layer (`*.clayer.yml`) implements the drivers for the physical interfaces. The API interfaces required by the different applications is shown in the table below.
 
-![Audio Processing Workflow](images/Audio-Workflow.png)
+| Required API Interfaces     | Description     |
+|:----------------------------|:----------------|
+| **Audio Processing**        |                 |
+| CMSIS_VSTREAM_AUDIO_IN      | [CMSIS-Driver vStream](https://arm-software.github.io/CMSIS_6/latest/Driver/group__mci__interface__gr.html) configured for Audio input. |
+| **Video Processing**        |                 |
+| CMSIS_VSTREAM_VIDEO_IN      | [CMSIS-Driver vStream](https://arm-software.github.io/CMSIS_6/latest/Driver/group__mci__interface__gr.html) configured for Video input. |
+| CMSIS_VSTREAM_VIDEO_OUT     | [CMSIS-Driver vStream](https://arm-software.github.io/CMSIS_6/latest/Driver/group__mci__interface__gr.html) configured for Video output. |
+| **Generic Inference Runner**|                 |
+| CMSIS_VSTREAM_AUDIO_IN      | [CMSIS-Driver vStream](https://arm-software.github.io/CMSIS_6/latest/Driver/group__mci__interface__gr.html configured for Audio input. |
 
-The audio templates focus on real-time audio processing and analysis:
+## Platform Support
 
-- **Keyword Spotting (KWS)**: Wake word detection and voice command recognition
-- **Custom Audio Algorithms**: Template for implementing custom audio ML processing
+The templates support via _target names_ multiple [Arm Cortex-M IP Subsystems](https://www.arm.com/products/silicon-ip-subsystems#Products). 
 
-These templates include optimized audio preprocessing, feature extraction, and neural network inference specifically tuned for low-power audio applications.
+| IP Subsystem | Description  |
+|:-------------|:-------------|
+| Corstone-300 | Cortex-M55 optional with Ethos-U55 or Ethos-U65 |
+| Corstone-310 | Cortex-M85 optional with Ethos-U55 |
+| Corstone-315 | Cortex-M85 optional with Ethos-U65 |
+| Corstone-320 | Cortex-M85 optional with Ethos-U85 |
 
-### Video Processing Templates
+Adding a postfix to the _target name_ in the `*.csolution.yml` project file configures the neural network inference pipeline for Ethos-U. Without this prefix only the Cortex-M system is used as shown in the diagram below.
 
-![Video Processing Workflow](images/Video-Workflow.png)
+| Postfix      | Description |
+|:-------------|:------------|
+| _none_       | Cortex-M system only, no Ethos-U NPU |
+| `-U55`       | Cortex-M system + Ethos-U55 NPU |
+| `-U65`       | Cortex-M system + Ethos-U65 NPU |
+| `-U85`       | Cortex-M system + Ethos-U85 NPU |
 
-The video templates provide computer vision capabilities:
-
-- **Object Detection**: Real-time object detection with bounding box visualization
-- **User Algorithm Template**: Flexible template for custom computer vision algorithms
-
-Video templates include efficient image preprocessing, memory management for video frames, and optimized inference pipelines for vision models.
-
-### Generic Inference Templates
-
-![Generic Inference Architecture](images/Generic-Inference.png)
-
-The generic templates provide a flexible foundation for any ML model:
-
-- **Inference Runner**: General-purpose ML model execution framework
-- **Model Deployment**: Tools and utilities for deploying custom TensorFlow Lite models
-- **Performance Profiling**: Built-in profiling and benchmarking capabilities
-
-## Target Platform Support
-
-The MLEK templates support multiple Arm Cortex-M platforms with Ethos-U NPU acceleration:
-
-| Platform | Processor | NPU | 
-|----------|-----------|-----|
-| **Corstone-300** | Cortex-M55 | Ethos-U55 |
-| **Corstone-310** | Cortex-M85 | Ethos-U55 or U65 | 
-| **Corstone-315** | Cortex-M85 | Ethos-U65 | 
-| **Corstone-320** | Cortex-M85 | Ethos-U85 | 
-
-Each template can be configured to run on:
-
-- **Arm Virtual Hardware (AVH)**: For simulation, CI/CD, and early development
-- **Physical Evaluation Boards**: For hardware validation and real-world testing
-- **Custom Hardware**: By implementing the required interfaces 
-
-## Virtual Interfaces
-
-VIO / VStream etc... 
+![Neural Network Inference Pipeline](./images/System-Topology.png)

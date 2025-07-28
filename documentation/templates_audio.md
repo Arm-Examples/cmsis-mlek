@@ -1,11 +1,11 @@
-# MLEK Reference Application Templates
+# MLEK Reference Applications - Audio
 
 <!-- markdownlint-disable MD013 -->
 <!-- markdownlint-disable MD036 -->
 
-## Audio Processing Templates
+## Audio Processing Reference Applications
 
-These templates focus on real-time audio processing:
+These reference applications focus on real-time audio processing:
 
 - **Keyword Spotting (KWS)**: Demonstrates wake word detection and voice command recognition
 - **Audio User Algorithm Template**: Provides a foundation for custom audio ML processing applications
@@ -36,6 +36,8 @@ Keyword spotting (KWS) is the process of detecting predefined words or phrases f
 The template can detect up to twelve keywords. A sample audio file containing the word "down" is provided for testing.
 
 ![KWS_Console_Print](images/kws_print.png)
+*This capture shows serial output from a hardware target, while the application detects the keyword "yes" on a microphone stream.*
+
 
 ### Build Types
 The KWS example defines four build types that control debug information and the audio source:
@@ -52,7 +54,7 @@ Use the Debug build types during development and the Release build types for per
 
 ## Audio User Algorithm Template
 
-Todo
+Todo.
 
 ## Working with MLEK Templates
 

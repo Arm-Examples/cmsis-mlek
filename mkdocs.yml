@@ -1,5 +1,5 @@
 site_name: CMSIS MLEK Machine Learning Evaluation Kit (MLEK)
-repo_url: https://github.com/ARM-software/cmsis-mlek
+repo_url: https://github.com/ARM-Examples/cmsis-mlek
 edit_uri: ./edit/main/documentation
 nav:
     - Home: index.md

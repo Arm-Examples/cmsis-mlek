@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Version: 3.0
 # Date: 2023-11-06
-# This bash script generates a CMSIS Software Pack: CMSIS-FreeRTOS
+# This bash script generates a CMSIS Software Pack: CMSIS-MLEK
 #
 
 set -o pipefail
@@ -44,7 +44,7 @@ PACK_BASE_FILES="
 # Default: empty
 #
 PACK_DELETE_FILES="
-vcpkg-configuration.json
+  vcpkg-configuration.json
 "
 
 # Specify patches to be applied
