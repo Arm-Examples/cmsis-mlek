@@ -100,16 +100,21 @@ jobs:
       run: |
         tree -L 3
 
+    - name: Sparse checkout one file manually
+      run: |
+        git init
+        git remote add origin https://github.com/${{ github.repository }}
+        git config core.sparseCheckout true
+        echo "my-configuration.json" >> .git/info/sparse-checkout
+        git pull origin ${{ github.ref_name }}
+          
+    - name: Check available files
+      run: ls -la
+
     - name: Extract pack content
       run: |
         mkdir ARM/cmsis-mlek -p
         unzip ./output/ARM.cmsis-mlek.*.pack -d ./ARM/cmsis-mlek/
-
-    - name: Get the vcpkg-configuration file
-      uses: actions/checkout@v4
-      with:
-        sparse-checkout: |
-          vcpkg-configuration.json
 
     - name: Diagnosis 1b of ${{ github.workspace }}
       run: |
