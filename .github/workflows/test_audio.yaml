@@ -93,6 +93,13 @@ jobs:
         sparse-checkout: |
           vcpkg-configuration.json
 
+    - name: Keep only the vcpkg-configuration.json file
+      working-directory: ./ARM/cmsis-mlek
+      run: |
+        for file in *; do
+          [ "$file" != "vcpkg-configuration.json" ] && rm -f "$file"
+        done
+
     - name: Restore Latest Pack Build from Cache
       uses: actions/cache/restore@v4
       with:
