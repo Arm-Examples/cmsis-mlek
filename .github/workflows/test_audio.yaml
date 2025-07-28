@@ -87,8 +87,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+    # - name: Checkout repo
+    #   uses: actions/checkout@v4
 
     - name: Restore Latest Pack Build from Cache
       uses: actions/cache/restore@v4
@@ -99,6 +99,7 @@ jobs:
     - name: Diagnosis 1 of ${{ github.workspace }}
       run: |
         tree -L 3
+        exit 1
 
     - name: Install tools
       uses: ARM-software/cmsis-actions/vcpkg@v1
