@@ -99,7 +99,7 @@ jobs:
         keep="vcpkg-configuration.json"
         if [ -f "$keep" ]; then
           for file in *; do
-            [ "$file" != "$keep" ] && [ -f "$file" ] && echo "$file"
+            [ "$file" != "$keep" ] && [ -f "$file" ] && rm -f "$file"
           done
           exit 0
         else
