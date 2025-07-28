@@ -96,7 +96,22 @@ jobs:
          path: ${{ github.workspace }}/output
          key: latest-cmsis-mlek-pack
 
-    - name: Diagnosis 1 of ${{ github.workspace }}
+    - name: Diagnosis 1a of ${{ github.workspace }}
+      run: |
+        tree -L 3
+
+    - name: Extract pack content
+      run: |
+        mkdir ARM/cmsis-mlek -p
+        unzip ./output/ARM.cmsis-mlek.*.pack -d ./ARM/cmsis-mlek/
+
+    - name: Get the vcpkg-configuration file
+      uses: actions/checkout@v4
+      with:
+        sparse-checkout: |
+          vcpkg-configuration.json
+
+    - name: Diagnosis 1b of ${{ github.workspace }}
       run: |
         tree -L 3
         exit 1
