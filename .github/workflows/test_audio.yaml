@@ -116,7 +116,6 @@ jobs:
     - name: Diagnosis 1a of ${{ github.workspace }}
       run: |
         tree -L 4
-        exit 1
 
     - name: Extract pack content
       run: |
@@ -125,7 +124,7 @@ jobs:
 
     - name: Diagnosis 1b of ${{ github.workspace }}
       run: |
-        tree -L 3
+        tree -L 4
         exit 1
 
     - name: Install tools
