@@ -31,6 +31,7 @@ PACK_BUILD=./build
 PACK_DIRS="
   docs
   template
+  overview
 "
 
 # Specify file names to be added to pack base directory

@@ -2,7 +2,7 @@
 <package schemaVersion="1.7.40" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.40/schema/PACK.xsd">
   <vendor>ARM</vendor>
   <name>cmsis-mlek</name>
-  <description>MLEK Templates and Examples package for CMSIS workflows</description>
+  <description overview="overview/README.md">MLEK Templates and Examples package for CMSIS workflows</description>
   <!-- web download link -->
   <url>https://</url>
   <license>LICENSE</license>

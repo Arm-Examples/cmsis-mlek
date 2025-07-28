@@ -1,2 +1,3 @@
 CompileFlags:
-  CompilationDatabase: c:\w\cmsis-mlek\template\audio\out\kws\${Name}\Debug-Live_Stream
+  CompilationDatabase: >-
+    /Users/chrsei01/02_Git/Arm-Examples/cmsis-mlek/template/audio/out/kws/${Name}/Debug-Live_Stream
