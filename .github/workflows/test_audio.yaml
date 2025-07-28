@@ -87,8 +87,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # - name: Checkout repo
-    #   uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+      with:
+        path: 'ARM/cmsis-mlek'
+        sparse-checkout: |
+          vcpkg-configuration.json
 
     - name: Restore Latest Pack Build from Cache
       uses: actions/cache/restore@v4
@@ -98,18 +101,8 @@ jobs:
 
     - name: Diagnosis 1a of ${{ github.workspace }}
       run: |
-        tree -L 3
-
-    - name: Sparse checkout one file manually
-      run: |
-        git init
-        git remote add origin https://github.com/${{ github.repository }}
-        git config core.sparseCheckout true
-        echo "my-configuration.json" >> .git/info/sparse-checkout
-        git pull origin ${{ github.ref_name }}
-          
-    - name: Check available files
-      run: ls -la
+        tree -L 4
+        exit 1
 
     - name: Extract pack content
       run: |
