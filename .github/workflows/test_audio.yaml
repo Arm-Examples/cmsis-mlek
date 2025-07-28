@@ -113,24 +113,15 @@ jobs:
          path: ${{ github.workspace }}/output
          key: latest-cmsis-mlek-pack
 
-    - name: Diagnosis 1a of ${{ github.workspace }}
-      run: |
-        tree -L 4
-
     - name: Extract pack content
       run: |
         mkdir ARM/cmsis-mlek -p
         unzip ./output/ARM.cmsis-mlek.*.pack -d ./ARM/cmsis-mlek/
 
-    - name: Diagnosis 1b of ${{ github.workspace }}
-      run: |
-        tree -L 4
-        exit 1
-
     - name: Install tools
       uses: ARM-software/cmsis-actions/vcpkg@v1
       with:
-        config: "vcpkg-configuration.json"
+        config: "./ARM/cmsis-mlek/vcpkg-configuration.json"
 
     - name: Activate Arm tool license
       uses: ARM-software/cmsis-actions/armlm@v1
@@ -159,21 +150,15 @@ jobs:
         key: cmsis-mlek-download
         path: /home/runner/.cache/arm/packs/.Download
 
-    - name: Diagnosis 2 of ${{ github.workspace }}
-      working-directory: /home/runner/.cache/arm/packs/.Download
-      run: |
-        tree -L 2
-        exit 1
-
     - name: AC6-Build-Test 4 context ${{matrix.context.proj}}.${{matrix.context.build_type}}+${{matrix.context.target_type}}
-      working-directory: ./template/audio
+      working-directory: ./ARM/cmsis-mlek/template/audio
       run: |
         cbuild mlek_audio.csolution.yml --update-rte --packs --no-schema-check \
         --context ${{matrix.context.proj}}.${{matrix.context.build_type}}+${{matrix.context.target_type}} \
         --toolchain AC6 --rebuild
 
     - name: AC6-Execution-Test 4 context ${{matrix.context.proj}}.${{matrix.context.build_type}}+${{matrix.context.target_type}}
-      working-directory: ./
+      working-directory: ./ARM/cmsis-mlek/
       run: |
         ${{ matrix.context.model }} \
         -a ./template/audio/out/${{matrix.context.proj}}/${{matrix.context.target_type}}/${{matrix.context.build_type}}/${{matrix.context.proj}}.axf \
@@ -184,7 +169,7 @@ jobs:
         --simlimit 30
 
     - name: Show and check FVP UART output for fvp_stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}_${{matrix.context.model}}.log
-      working-directory: ./
+      working-directory: ./ARM/cmsis-mlek/
       run: |
         echo "Show FVP UART output..."
         cat fvp_stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}_${{matrix.context.model}}.log
@@ -195,4 +180,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: fvp_stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}_${{matrix.context.model}}.log
-        path: ./fvp_stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}_${{matrix.context.model}}.log
+        path: ./ARM/cmsis-mlek/fvp_stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}_${{matrix.context.model}}.log
