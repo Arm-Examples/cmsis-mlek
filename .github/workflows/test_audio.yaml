@@ -91,8 +91,7 @@ jobs:
       uses: actions/checkout@v4
       with:
        path: 'ARM/cmsis-mlek'
-       sparse-checkout: |
-         vcpkg-configuration.json
+       sparse-checkout: vcpkg-configuration.json
        # Specifies whether to use cone-mode when doing a sparse checkout.
        # Default: true
        sparse-checkout-cone-mode: false
