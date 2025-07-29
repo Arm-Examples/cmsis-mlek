@@ -107,11 +107,6 @@ jobs:
           exit 1
         fi
 
-    - name: Diagnosis 1 of ${{ github.workspace }}/
-      run: |
-        tree -L 3
-        exit 1
-
     - name: Restore Latest Pack Build from Cache
       uses: actions/cache/restore@v4
       with:
@@ -120,7 +115,6 @@ jobs:
 
     - name: Extract pack content
       run: |
-        mkdir ARM/cmsis-mlek -p
         unzip ./output/ARM.cmsis-mlek.*.pack -d ./ARM/cmsis-mlek/
 
     - name: Install tools
