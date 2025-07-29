@@ -87,25 +87,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Get the vcpkg-configuration.json file    
+      uses: actions/checkout@v4
       with:
        path: 'ARM/cmsis-mlek'
        sparse-checkout: |
          vcpkg-configuration.json
+       # Specifies whether to use cone-mode when doing a sparse checkout.
+       # Default: true
+       sparse-checkout-cone-mode: false
 
-    - name: Keep only the vcpkg-configuration.json file
-      working-directory: ./ARM/cmsis-mlek
+    - name: Diagnosis 1 of ${{ github.workspace }}/
       run: |
-        keep="vcpkg-configuration.json"
-        if [ -f "$keep" ]; then
-          for file in *; do
-            [ "$file" != "$keep" ] && [ -f "$file" ] && rm -f "$file"
-          done
-          exit 0
-        else
-          echo "Error: $keep does not exist." >&2
-          exit 1
-        fi
+        tree -L 3
+        exit 1
 
     - name: Restore Latest Pack Build from Cache
       uses: actions/cache/restore@v4
