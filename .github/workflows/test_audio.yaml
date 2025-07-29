@@ -93,6 +93,20 @@ jobs:
        path: 'ARM/cmsis-mlek'
        sparse-checkout: vcpkg-configuration.json
 
+    - name: Keep only the vcpkg-configuration.json file
+      working-directory: ./ARM/cmsis-mlek
+      run: |
+        keep="vcpkg-configuration.json"
+        if [ -f "$keep" ]; then
+          for file in *; do
+            [ "$file" != "$keep" ] && [ -f "$file" ] && rm -f "$file"
+          done
+          exit 0
+        else
+          echo "Error: $keep does not exist." >&2
+          exit 1
+        fi
+
     - name: Diagnosis 1 of ${{ github.workspace }}/
       run: |
         tree -L 3
