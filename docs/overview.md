@@ -12,9 +12,10 @@ Key Features:
 
 MLEK covers three main application domains:
 
-- [Audio](todo-link-to-docu) processing with audio classification and keyword spotting.
-- [Video](todo-link-to-docu) processing with image classification and object detection.
-- [Generic](todo-link-to-docu) inference for flexible ML model deployment.
+- [Audio](https://arm-examples.github.io/cmsis-mlek/templates_audio.html) processing with audio classification and keyword spotting.
+- [Video](https://arm-examples.github.io/cmsis-mlek/templates_video.html) processing with image classification and object detection.
+- [Generic](https://arm-examples.github.io/cmsis-mlek) inference for flexible ML model deployment.
+
 
 Each reference applications is a *csolution project* which supports deployment to physical hardware or Arm Virtual Hardware (AVH-FVP) for simulation.
 
