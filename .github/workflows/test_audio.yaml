@@ -92,9 +92,6 @@ jobs:
       with:
        path: 'ARM/cmsis-mlek'
        sparse-checkout: vcpkg-configuration.json
-       # Specifies whether to use cone-mode when doing a sparse checkout.
-       # Default: true
-       sparse-checkout-cone-mode: false
 
     - name: Diagnosis 1 of ${{ github.workspace }}/
       run: |
