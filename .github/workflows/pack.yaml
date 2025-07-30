@@ -5,8 +5,9 @@ on:
   #  branches: [ main ]
   #pull_request:
   #  branches: [ main ]
-  #release:
-  #  types: [published]
+  release:
+    types: [published]
+
 jobs:
   pack:
     name: Generate pack
@@ -34,8 +35,8 @@ jobs:
           packchk-version: 1.4.3
           gen-pack-script: ./gen_pack.sh
           gen-pack-output: ./output
-          gen-doc-script: ./documentation/gen_doc.sh
-          doc-path: ./docs
+          #gen-doc-script: ./docs/gen_doc.sh
+          #doc-path: ./docs
 
       - name: Cache artifact
         uses: actions/cache/save@v4

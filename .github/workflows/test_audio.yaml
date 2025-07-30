@@ -87,15 +87,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
+    - name: Get the vcpkg-configuration.json file    
       uses: actions/checkout@v4
+      with:
+       path: 'ARM/cmsis-mlek'
+       sparse-checkout: vcpkg-configuration.json
 
+    - name: Keep only the vcpkg-configuration.json file
+      working-directory: ./ARM/cmsis-mlek
+      run: |
+        keep="vcpkg-configuration.json"
+        if [ -f "$keep" ]; then
+          for file in *; do
+            [ "$file" != "$keep" ] && [ -f "$file" ] && rm -f "$file"
+          done
+          exit 0
+        else
+          echo "Error: $keep does not exist." >&2
+          exit 1
+        fi
 
     - name: Restore Latest Pack Build from Cache
       uses: actions/cache/restore@v4
       with:
          path: ${{ github.workspace }}/output
          key: latest-cmsis-mlek-pack
+
+    - name: Extract pack content
+      run: |
+        unzip ./output/ARM.cmsis-mlek.*.pack -d ./ARM/cmsis-mlek/
 
     - name: Install tools
       uses: ARM-software/cmsis-actions/vcpkg@v1
@@ -130,14 +150,14 @@ jobs:
         path: /home/runner/.cache/arm/packs/.Download
 
     - name: AC6-Build-Test 4 context ${{matrix.context.proj}}.${{matrix.context.build_type}}+${{matrix.context.target_type}}
-      working-directory: ./template/audio
+      working-directory: ./ARM/cmsis-mlek/template/audio
       run: |
         cbuild mlek_audio.csolution.yml --update-rte --packs --no-schema-check \
         --context ${{matrix.context.proj}}.${{matrix.context.build_type}}+${{matrix.context.target_type}} \
         --toolchain AC6 --rebuild
 
     - name: AC6-Execution-Test 4 context ${{matrix.context.proj}}.${{matrix.context.build_type}}+${{matrix.context.target_type}}
-      working-directory: ./
+      working-directory: ./ARM/cmsis-mlek/
       run: |
         ${{ matrix.context.model }} \
         -a ./template/audio/out/${{matrix.context.proj}}/${{matrix.context.target_type}}/${{matrix.context.build_type}}/${{matrix.context.proj}}.axf \
@@ -148,7 +168,7 @@ jobs:
         --simlimit 30
 
     - name: Show and check FVP UART output for fvp_stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}_${{matrix.context.model}}.log
-      working-directory: ./
+      working-directory: ./ARM/cmsis-mlek/
       run: |
         echo "Show FVP UART output..."
         cat fvp_stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}_${{matrix.context.model}}.log
@@ -159,4 +179,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: fvp_stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}_${{matrix.context.model}}.log
-        path: ./fvp_stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}_${{matrix.context.model}}.log
+        path: ./ARM/cmsis-mlek/fvp_stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}_${{matrix.context.model}}.log

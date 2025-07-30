@@ -29,6 +29,6 @@ echo_log "Generating documentation ..."
 
 "${UTILITY_MKDOCS}" build -f "${DIRNAME}/../mkdocs.yml"  || exit
 
-check_links --timeout 120 "${DIRNAME}/../docs/index.html" "${DIRNAME}"
+check_links --timeout 120 "${DIRNAME}/../documentation/index.html" "${DIRNAME}"
 
 exit 0

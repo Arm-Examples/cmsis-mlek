@@ -36,7 +36,7 @@ The MLEK references applications are licensed under [![License](https://img.shie
 
 ## Documentation
 
-The [documentation](https://arm-software.github.io/SDS-Framework/main/index.html) is generated using [MKDocs](https://www.mkdocs.org/). Use `mkdocs serve` to generate the documentation on a local computer.
+The [documentation](https://arm-examples.github.io/cmsis-mlek/index.html) is generated using [MKDocs](https://www.mkdocs.org/). Use `mkdocs serve` to generate the documentation on a local computer.
 
 ## Contributions and Pull Requests
 

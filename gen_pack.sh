@@ -29,7 +29,6 @@ PACK_BUILD=./build
 # Default: empty (all folders)
 #
 PACK_DIRS="
-  docs
   template
   overview
 "
@@ -85,7 +84,7 @@ function preprocess() {
   echo "Changing working directory to $(pwd)"
 
   echo "Executing ./gen_doc.sh"
-  ./documentation/gen_doc.sh
+  ./docs/gen_doc.sh
 
   popd > /dev/null
   echo "Changing working directory to $(pwd)"
