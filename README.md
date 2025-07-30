@@ -1,6 +1,14 @@
 # CMSIS-MLEK Software Pack
 
-This repository contains **Machine Learning Evaluation Kit (MLEK)** pack which provides [CMSIS Reference Applications](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/) and templates for Edge AI development. These applications implement data preprocessing, memory management, and neural network inference pipelines that are optimized for Cortex-M and Ethos-U platforms.
+This repository contains **Machine Learning Evaluation Kit (MLEK)** pack which provides [CMSIS Reference Applications](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/) and templates for Edge AI development. These applications implement data preprocessing, memory management, and neural network inference pipelines that are optimized for Cortex-M and Ethos-U platforms. The examples are prepared to run with [Keil Studio for VS Code](https://www.keil.arm.com/).
+
+The CMSIS-MLEK software pack is derived from the [Arm® ML embedded evaluation kit](https://git.gitlab.arm.com/artificial-intelligence/ethos-u/ml-embedded-evaluation-kit) and makes the examples easier to access. It also contains interfaces to physical hardware and simplifies porting to target hardware. It contains the following ML applications and uses currently Neural Network Models currently in [TensorFlow Lite](https://www.keil.arm.com/packs/tensorflow-lite-micro-tensorflow) format.
+
+ML application                                 | Description             |  Neural Network Model
+:----------------------------------------------|:------------------------|:---------------------
+[Keyword spotting (KWS)](./template/audio)      | Recognize the presence of a key word in verbal speech | [MicroNet](https://github.com/ARM-software/ML-zoo/tree/9f506fe52b39df545f0e6c5ff9223f671bc5ae00/models/keyword_spotting/micronet_medium/tflite_int8)
+[Object detection](./template/video)           | Detects and draws face bounding box in a given image  | [Yolo Fastest](https://github.com/emza-vs/ModelZoo/blob/master/object_detection/yolo-fastest_192_face_v4.tflite)
+[Generic inference runner](./template/generic) | Code block allowing you to develop your own use case  | Your custom model
 
 Refer to [Overview](./overview/README.md) for more details.
 
@@ -9,7 +17,7 @@ Refer to [Overview](./overview/README.md) for more details.
 Directory                         | Description
 ----------------------------------|-------------------------------
 [overview](./overview)            | Top-level overview of MLEK reference applications.
-[documentation](./documentation/) | [User documentation](https://arm-examples.github.io/cmsis-mlek/main/index.html) of the MLEK reference applications.
+[docs](./docs/)                   | Source of the [user documentation](https://arm-examples.github.io/cmsis-mlek) of the MLEK reference applications.
 [template](./template)            | [MLEK reference applications](https://arm-examples.github.io/cmsis-mlek/main/template.html), a test framework for DSP and ML algorithms.
 [.github/workflows](./.github/workflows) | GitHub Actions for validation and publishing.
 [.ci](./.ci)                      | Files that relate to CI tests.
@@ -17,6 +25,7 @@ Directory                         | Description
 ## Related
 
 - [MLEK Pack](https://www.keil.arm.com/packs/MLEK) available on [keil.arm.com/packs](https://www.keil.arm.com/packs).
+- [tensorflow-lite-micro Pack](https://www.keil.arm.com/packs/tensorflow-lite-micro-tensorflow) available on [keil.arm.com/packs](https://www.keil.arm.com/packs).
 - [MLEK Examples](https://github.com/Arm-Examples/mlek-examples) a repository with MLEK applications that are configured for evaluation boards and use cases.
 - [ML Developers Guide for Cortex-M Processors and Ethos-U NPU](https://developer.arm.com/documentation/109267).
 - [Arm Virtual Hardware - FVP](https://github.com/arm-software/avh) repository with documentation.
@@ -27,11 +36,7 @@ The MLEK references applications are licensed under [![License](https://img.shie
 
 ## Documentation
 
-The [documentation](https://arm-software.github.io/SDS-Framework/main/index.html) is generated using  [MKDocs](https://www.mkdocs.org/) with the following additional plugins:
-
-- [mermaid2](https://mkdocs-mermaid2.readthedocs.io/en/latest/) for sequence diagrams.
-
-Use `mkdocs serve` to generate the documentation on a local computer.
+The [documentation](https://arm-software.github.io/SDS-Framework/main/index.html) is generated using [MKDocs](https://www.mkdocs.org/). Use `mkdocs serve` to generate the documentation on a local computer.
 
 ## Contributions and Pull Requests
 

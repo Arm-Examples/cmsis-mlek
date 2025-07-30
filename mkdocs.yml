@@ -7,7 +7,7 @@ nav:
     - Audio Template Applications: templates_audio.md
     - Video Template Applications: templates_video.md
     - Target Configuration Hardware Boards: target_configuration_refapp.md
-    -  Target Configuration Arm Virtual Hardware: target_configuration_avh.md
+    - Target Configuration Arm Virtual Hardware: target_configuration_avh.md
 
 plugins:
     - search

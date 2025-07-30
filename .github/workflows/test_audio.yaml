@@ -14,7 +14,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-name: mlek audio build and execution test
+name: MLEK audio build and execution test
 on:
 
   workflow_dispatch:
@@ -100,7 +100,7 @@ jobs:
     - name: Install tools
       uses: ARM-software/cmsis-actions/vcpkg@v1
       with:
-        config: "vcpkg-configuration.json"
+        config: ".ci/vcpkg-configuration.json"
 
     - name: Activate Arm tool license
       uses: ARM-software/cmsis-actions/armlm@v1

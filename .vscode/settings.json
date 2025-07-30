@@ -1,5 +1,5 @@
 {
     "clangd.arguments": [
-        "--compile-commands-dir=/Users/chrsei01/02_Git/Arm-Examples/cmsis-mlek/template/audio/out/kws/${Name}/Debug-Live_Stream"
+        "--compile-commands-dir=c:\\w\\cmsis-mlek\\template\\audio\\out\\kws\\${Name}\\Debug-Live_Stream"
     ]
 }

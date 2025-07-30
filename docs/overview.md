@@ -10,14 +10,15 @@ Key Features:
 - **Performance Validation**: Test and optimize ML performance on target hardware or simulation.
 - **Hardware Evaluation**: Compare performance across different Corstone platforms and configurations.
 
-MLEK covers three main application domains:
+The CMSIS-MLEK software pack is derived from the [Arm® ML embedded evaluation kit](https://git.gitlab.arm.com/artificial-intelligence/ethos-u/ml-embedded-evaluation-kit) and makes the examples easier to access. It also contains interfaces to physical hardware and simplifies porting to target hardware. It contains the following ML applications and uses currently Neural Network Models currently in [TensorFlow Lite](https://www.keil.arm.com/packs/tensorflow-lite-micro-tensorflow) format.
 
-- [Audio](https://arm-examples.github.io/cmsis-mlek/templates_audio.html) processing with audio classification and keyword spotting.
-- [Video](https://arm-examples.github.io/cmsis-mlek/templates_video.html) processing with image classification and object detection.
-- [Generic](https://arm-examples.github.io/cmsis-mlek) inference for flexible ML model deployment.
+| ML application                                 | Description             |  Neural Network Model |
+|:-----------------------------------------------|:------------------------|:----------------------|
+| [Keyword spotting (KWS)](https://github.com/ARM-software/cmsis-mlek/template/audio)      | Recognize the presence of a key word in verbal speech | [MicroNet](https://github.com/ARM-software/ML-zoo/tree/9f506fe52b39df545f0e6c5ff9223f671bc5ae00/models/keyword_spotting/micronet_medium/tflite_int8) |
+| [Object detection](https://github.com/ARM-software/cmsis-mlek/template/video)           | Detects and draws face bounding box in a given image  | [Yolo Fastest](https://github.com/emza-vs/ModelZoo/blob/master/object_detection/yolo-fastest_192_face_v4.tflite) |
+| [Generic inference runner](https://github.com/ARM-software/cmsis-mlek/template/generic) | Code block allowing you to develop your own use case  | Your custom model |
 
-
-Each reference applications is a *csolution project* which supports deployment to physical hardware or Arm Virtual Hardware (AVH-FVP) for simulation.
+Each [ML reference application](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/) is a *csolution project* which supports deployment to physical hardware or Arm Virtual Hardware (AVH-FVP) for simulation.
 
 ![MLEK Reference Application Architecture](./images/MLEK-Architecture.png)
 
@@ -27,24 +28,26 @@ A board layer (`*.clayer.yml`) implements the drivers for the physical interface
 |:----------------------------|:----------------|
 | **Audio Processing**        |                 |
 | CMSIS_VSTREAM_AUDIO_IN      | [CMSIS-Driver vStream](https://arm-software.github.io/CMSIS_6/latest/Driver/group__mci__interface__gr.html) configured for Audio input. |
+| STDOUT                      | Standard I/O for printf output. |
 | **Video Processing**        |                 |
 | CMSIS_VSTREAM_VIDEO_IN      | [CMSIS-Driver vStream](https://arm-software.github.io/CMSIS_6/latest/Driver/group__mci__interface__gr.html) configured for Video input. |
 | CMSIS_VSTREAM_VIDEO_OUT     | [CMSIS-Driver vStream](https://arm-software.github.io/CMSIS_6/latest/Driver/group__mci__interface__gr.html) configured for Video output. |
+| STDOUT                      | Standard I/O for printf output. |
 | **Generic Inference Runner**|                 |
-| CMSIS_VSTREAM_AUDIO_IN      | [CMSIS-Driver vStream](https://arm-software.github.io/CMSIS_6/latest/Driver/group__mci__interface__gr.html configured for Audio input. |
+| STDOUT                      | Standard I/O for printf output. |
 
 ## Platform Support
 
-The templates support via _target names_ multiple [Arm Cortex-M IP Subsystems](https://www.arm.com/products/silicon-ip-subsystems#Products). 
+The templates support via _target names_ multiple [Arm Cortex-M IP Subsystems](https://www.arm.com/products/silicon-ip-subsystems#Products). These _target names_ support execution on [AVH FVP simulation models](https://arm-software.github.io/AVH/main/simulation/html/index.html) which is useful during software development or with [Contiguous Integration (CI)](https://github.com/Arm-Examples/cmsis-mlek/actions) testing using GitHub actions.
 
-| IP Subsystem | Description  |
-|:-------------|:-------------|
-| Corstone-300 | Cortex-M55 optional with Ethos-U55 or Ethos-U65 |
-| Corstone-310 | Cortex-M85 optional with Ethos-U55 |
-| Corstone-315 | Cortex-M85 optional with Ethos-U65 |
-| Corstone-320 | Cortex-M85 optional with Ethos-U85 |
+| Target Name  | IP Subsystem | Description  |
+|:-------------|:-------------|:-------------|
+| AVH-SSE-300  | [Corstone-300](https://developer.arm.com/Processors/Corstone-300) | Cortex-M55 optional with Ethos-U55 or Ethos-U65 |
+| AVH-SSE-310  | [Corstone-310](https://developer.arm.com/Processors/Corstone-310) | Cortex-M85 optional with Ethos-U55 |
+| AVH-SSE-315  | [Corstone-315](https://developer.arm.com/Processors/Corstone-315) | Cortex-M85 optional with Ethos-U65 |
+| AVH-SSE-320  | [Corstone-320](https://developer.arm.com/Processors/Corstone-320) | Cortex-M85 optional with Ethos-U85 |
 
-Adding a postfix to the _target name_ in the `*.csolution.yml` project file configures the neural network inference pipeline for Ethos-U. Without this prefix only the Cortex-M system is used as shown in the diagram below.
+Adding a postfix to the _target name_ in the `*.csolution.yml` project file configures the neural network inference pipeline for Ethos-U. Without this prefix only the Cortex-M system is used as shown in the diagram below. Such a postfix can also be used for _target names_ that deploy to physical hardware.
 
 | Postfix      | Description |
 |:-------------|:------------|
