@@ -10,28 +10,36 @@ layer:
         - AVH_VIDEO
 
   define:
+    - CMSIS_target_header: \"Corstone-320.h\"
     - ETHOSU85
     - ARM_MODEL_USE_PMU_COUNTERS
 
   packs:
     - pack: ARM::CMSIS
+    - pack: ARM::CMSIS-Compiler@^2.1.0
     - pack: ARM::AVH_FVP
     - pack: ARM::SSE_320_BSP@1.0.0
 
   components:
     - component: CMSIS:CORE
 
+    - component: CMSIS Driver:USART
     - component: CMSIS Driver:vStream:AudioIn
     - component: CMSIS Driver:vStream:AudioOut
     - component: CMSIS Driver:vStream:VideoIn
     - component: CMSIS Driver:vStream:VideoOut
 
+    - component: CMSIS-Compiler:CORE
+    - component: CMSIS-Compiler:STDERR:Custom
+    - component: CMSIS-Compiler:STDOUT:Custom
+
     - component: Device:Definition
     - component: Device:Startup&C Startup
 
-    - component: Device:Native Driver:Timeout
     - component: Device:Native Driver:SysCounter
     - component: Device:Native Driver:SysTimer
+    - component: Device:Native Driver:Timeout
+    - component: Device:Native Driver:UART
 
     - component: Machine Learning:NPU Support:Ethos-U Driver&Generic U85
 
@@ -40,10 +48,7 @@ layer:
       files:
         - file: ./main.c
         - file: ./main.h
-        - file: ./uart_cmsdk_apb.c
-        - file: ./uart_stdout.h
-        - file: ./uart_config.h
-        - file: ./retarget.c
+        - file: ./retarget_stdio.c
 
   linker:
     - script: ./mps4-sse-320.sct

@@ -25,6 +25,7 @@ extern "C" {
 
 /* Prototypes */
 extern int app_main (void);
+extern int stdio_init (void);
 
 #ifdef __cplusplus
 }

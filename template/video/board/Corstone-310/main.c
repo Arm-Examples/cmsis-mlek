@@ -20,7 +20,6 @@
 #include  CMSIS_device_header
 
 #include "log_macros.h"
-#include "uart_stdout.h"
 
 #include "main.h"
 
@@ -128,7 +127,9 @@ static int arm_ethosu_npu_init(void)
 #endif /* if defined(ETHOSU_ARCH) */
 
 int main (void) {
-  UartStdOutInit();
+
+  /* Initialize STDIO */
+  stdio_init();
 
 #if defined(ETHOSU_ARCH)
   /* Initialise the NPU */
