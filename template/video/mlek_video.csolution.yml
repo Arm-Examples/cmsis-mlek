@@ -112,7 +112,7 @@ solution:
             model: FVP_Corstone_SSE-300_Ethos-U65
             config: ./board/Corstone-300/fvp_config.txt
             args:
-              - -C mps3_board.v_path=./board/Corstone-300/vsi/python/      
+              - -C mps3_board.v_path=./board/Corstone-300/vsi/python/
 
     # Arm Corstone-310 targets
     - type: AVH-SSE-310
@@ -170,7 +170,7 @@ solution:
             model: FVP_Corstone_SSE-315
             config: ./board/Corstone-315/fvp_config.txt
             args:
-              - -C mps3_board.v_path=./board/Corstone-315/vsi/python/
+              - -C mps4_board.v_path=./board/Corstone-315/vsi/python/
 
     - type: AVH-SSE-315-U65
       board: ARM::SSE-315
@@ -184,7 +184,7 @@ solution:
             model: FVP_Corstone_SSE-315
             config: ./board/Corstone-315/fvp_config.txt
             args:
-              - -C mps3_board.v_path=./board/Corstone-315/vsi/python/
+              - -C mps4_board.v_path=./board/Corstone-315/vsi/python/
 
     # Arm Corstone-320 targets
     - type: AVH-SSE-320
@@ -199,7 +199,7 @@ solution:
             model: FVP_Corstone_SSE-320
             config: ./board/Corstone-320/fvp_config.txt
             args:
-              - -C mps3_board.v_path=./board/Corstone-320/vsi/python/
+              - -C mps4_board.v_path=./board/Corstone-320/vsi/python/
 
     - type: AVH-SSE-320-U85
       board: ARM::SSE-320
@@ -213,8 +213,8 @@ solution:
             model: FVP_Corstone_SSE-320
             config: ./board/Corstone-320/fvp_config.txt
             args:
-              - -C mps3_board.v_path=./board/Corstone-320/vsi/python/
-              
+              - -C mps4_board.v_path=./board/Corstone-320/vsi/python/
+
   projects:
     # Object Detection use case
     - project: ./object-detection/object-detection.cproject.yml
