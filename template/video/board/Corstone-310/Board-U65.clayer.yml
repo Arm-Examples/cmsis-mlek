@@ -15,19 +15,25 @@ layer:
 
   packs:
     - pack: ARM::CMSIS
+    - pack: ARM::AVH_FVP
     - pack: ARM::V2M_MPS3_SSE_310_BSP@1.4.0
 
   components:
-    - component: ARM::CMSIS:CORE
+    - component: CMSIS:CORE
 
-    - component: ARM::Device:Definition
-    - component: ARM::Device:Startup&C Startup
+    - component: CMSIS Driver:vStream:AudioIn
+    - component: CMSIS Driver:vStream:AudioOut
+    - component: CMSIS Driver:vStream:VideoIn
+    - component: CMSIS Driver:vStream:VideoOut
 
-    - component: ARM::Device:Native Driver:Timeout
-    - component: ARM::Device:Native Driver:SysCounter
-    - component: ARM::Device:Native Driver:SysTimer
+    - component: Device:Definition
+    - component: Device:Startup&C Startup
 
-    - component: ARM::Machine Learning:NPU Support:Ethos-U Driver&Generic U65
+    - component: Device:Native Driver:Timeout
+    - component: Device:Native Driver:SysCounter
+    - component: Device:Native Driver:SysTimer
+
+    - component: Machine Learning:NPU Support:Ethos-U Driver&Generic U65
 
   groups:
     - group: Board
@@ -38,14 +44,6 @@ layer:
         - file: ./uart_stdout.h
         - file: ./uart_config.h
         - file: ./retarget.c
-
-    - group: Streaming Interface
-      files:
-        - file: ./vsi/include/arm_vsi.h
-        - file: ./vsi/audio/driver/audio_drv.c
-        - file: ./vsi/audio/include/audio_drv.h
-        - file: ./vsi/video/source/video_drv.c
-        - file: ./vsi/video/include/video_drv.h
 
   linker:
     - script: ./mps3-sse-310.sct

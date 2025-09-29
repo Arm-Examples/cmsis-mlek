@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2024 Arm Limited. All rights reserved.
+# Copyright (c) 2021-2025 Arm Limited. All rights reserved.
 
 # Virtual Streaming Interface instance 0 Python script: Audio Input
 
@@ -12,6 +12,7 @@
 
 import logging
 import wave
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -52,53 +53,107 @@ DMA_Control_Direction_M2P = 1<<1
 # User registers
 Regs = [0] * 64
 
-CONTROL     = 0  # Regs[0]
-CHANNELS    = 0  # Regs[1]
-SAMPLE_BITS = 0  # Regs[2]
-SAMPLE_RATE = 0  # Regs[3]
+STATUS      = 0  # Regs[0]
+CONTROL     = 0  # Regs[1]
+CHANNELS    = 0  # Regs[2]
+SAMPLE_BITS = 0  # Regs[3]
+SAMPLE_RATE = 0  # Regs[4]
+
+# STATUS register definitions
+STATUS_OPEN_Msk = 1<<0 # Stream Open
+STATUS_DATA_Msk = 1<<1 # Data Available
+STATUS_EOS_Msk  = 1<<2 # End of Stream
 
 # User CONTROL register definitions
-CONTROL_ENABLE_Msk = 1<<0
+CONTROL_ENABLE_Msk = 1<<0 #Enable Streaming
 
 # Data buffer
 Data = bytearray()
 
+# Global WAVE object
+WAVE = None
 
 ## Open WAVE file (store object into global WAVE object)
 #  @param name name of WAVE file to open
+#  @return True if successfully opened, False otherwise
 def openWAVE(name):
     global WAVE
-    logger.info("Open WAVE file (read mode): {}".format(name))
-    WAVE = wave.open(name, 'rb')
-    logger.info("  Number of channels: {}".format(WAVE.getnchannels()))
-    logger.info("  Sample bits: {}".format(WAVE.getsampwidth() * 8))
-    logger.info("  Sample rate: {}".format(WAVE.getframerate()))
-    logger.info("  Number of frames: {}".format(WAVE.getnframes()))
+    abs_path = os.path.abspath(name)
+    logger.info("Open WAVE file: {}".format(abs_path))
 
-## Read WAVE frames (global WAVE object) into global AudioFrames object
+    try:
+        WAVE = wave.open(abs_path, 'rb')
+
+        # Output WAVE file properties
+        logger.info("  Number of channels: {}".format(WAVE.getnchannels()))
+        logger.info("  Sample bits: {}".format(WAVE.getsampwidth() * 8))
+        logger.info("  Sample rate: {}".format(WAVE.getframerate()))
+        logger.info("  Number of frames: {}".format(WAVE.getnframes()))
+        return True
+    except FileNotFoundError:
+        logger.error("WAVE file not found: {}".format(abs_path))
+        WAVE = None
+        return False
+    except wave.Error as e:
+        logger.error("Invalid WAVE file {}: {}".format(abs_path, str(e)))
+        WAVE = None
+        return False
+    except Exception as e:
+        logger.error("Error opening WAVE file {}: {}".format(abs_path, str(e)))
+        WAVE = None
+        return False
+
+## Read WAVE frames (global WAVE object)
 #  @param n number of frames to read
 #  @return frames frames read
 def readWAVE(n):
     global WAVE
     logger.info("Read WAVE frames")
-    frames = WAVE.readframes(n)
-    return frames
+    if WAVE is None:
+        logger.error("No valid WAVE file is open")
+        return b''
+    try:
+        frames = WAVE.readframes(n)
+        frames_read = len(frames) // (WAVE.getnchannels() * WAVE.getsampwidth()) if frames else 0
+        logger.debug("Requested {} frames, got {} frames ({} bytes)".format(n, frames_read, len(frames)))
+
+        return frames
+    except Exception as e:
+        logger.error("Error reading WAVE frames: {}".format(str(e)))
+        return b''
 
 ## Close WAVE file (global WAVE object)
 def closeWAVE():
     global WAVE
     logger.info("Close WAVE file")
-    WAVE.close()
+    if WAVE is not None:
+        try:
+            WAVE.close()
+
+        except Exception as e:
+            logger.error("Error closing WAVE file: {}".format(str(e)))
+        finally:
+            WAVE = None
+    else:
+        logger.warning("No WAVE file to close")
 
 
-## Load audio frames into global Data buffer
-#  @param block_size size of block to load (in bytes)
-def loadAudioFrames(block_size):
-    global Data
-    logger.info("Load audio frames into data buffer")
+## Read a block of data into the global Data buffer
+#  @param block_size size of block to read (in bytes)
+def readDataBlock(block_size):
+    global Data, STATUS
+    logger.info("Read block of data into the data buffer")
+
     frame_size = CHANNELS * ((SAMPLE_BITS + 7) // 8)
     frames_max = block_size // frame_size
     Data = readWAVE(frames_max)
+
+    # Check if we've reached the end of the file
+    if len(Data) == 0:
+        logger.warning("End of WAVE file reached - no more frames available")
+        # Set EOS bit in STATUS register
+        STATUS |= STATUS_EOS_Msk
+        logger.debug("STATUS register updated: EOS bit set")
 
 
 ## Initialize
@@ -173,15 +228,18 @@ def wrDMA(index, value):
 #  @param size size of data to read (in bytes, multiple of 4)
 #  @return data data read (bytearray)
 def rdDataDMA(size):
-    global Data
+    global Data, STATUS
     logger.info("Python function rdDataDMA() called")
 
-    loadAudioFrames(size)
+    readDataBlock(size)
 
     n = min(len(Data), size)
     data = bytearray(size)
     data[0:n] = Data[0:n]
     logger.debug("Read data ({} bytes)".format(size))
+    # Set DATA bit after the blocks of data is read
+    STATUS |= STATUS_DATA_Msk
+    logger.debug("STATUS register updated: DATA bit set")
 
     return data
 
@@ -202,14 +260,20 @@ def wrDataDMA(data, size):
 ## Write CONTROL register (user register)
 #  @param value value to write (32-bit)
 def wrCONTROL(value):
-    global CONTROL
+    global CONTROL, STATUS
     if ((value ^ CONTROL) & CONTROL_ENABLE_Msk) != 0:
         if (value & CONTROL_ENABLE_Msk) != 0:
-            logger.info("Enable Receiver")
-            openWAVE('test.wav')
+            logger.info("CONTROL register updated: ENABLE bit set")
+            if openWAVE('test.wav'):
+                # File opened successfully, stream is open
+                STATUS |= STATUS_OPEN_Msk
+                logger.debug("STATUS register updated: OPEN bit set")
         else:
-            logger.info("Disable Receiver")
+            logger.info("CONTROL register updated: ENABLE bit cleared")
             closeWAVE()
+            # Clear OPEN, DATA, EOS status bits when stream is closed
+            STATUS &= ~(STATUS_OPEN_Msk | STATUS_DATA_Msk | STATUS_EOS_Msk)
+            logger.debug("STATUS register updated: OPEN, DATA, EOS bits cleared")
     CONTROL = value
 
 ## Write CHANNELS register (user register)
@@ -217,22 +281,32 @@ def wrCONTROL(value):
 def wrCHANNELS(value):
     global CHANNELS
     CHANNELS = value
-    logger.info("Number of channels: {}".format(value))
+    logger.info("CHANNELS: {}".format(value))
 
 ## Write SAMPLE_BITS register (user register)
 #  @param value value to write (32-bit)
 def wrSAMPLE_BITS(value):
     global SAMPLE_BITS
     SAMPLE_BITS = value
-    logger.info("Sample bits: {}".format(value))
+    logger.info("SAMPLE_BITS: {}".format(value))
 
 ## Write SAMPLE_RATE register (user register)
 #  @param value value to write (32-bit)
 def wrSAMPLE_RATE(value):
     global SAMPLE_RATE
     SAMPLE_RATE = value
-    logger.info("Sample rate: {}".format(value))
+    logger.info("SAMPLE_RATE: {}".format(value))
 
+## Read STATUS register (user register)
+#  @return value value read (32-bit)
+def rdSTATUS():
+    global STATUS
+    logger.info("STATUS: {}".format(STATUS))
+    value = STATUS
+    # Clear DATA bit on read of STATUS register
+    STATUS &= ~STATUS_DATA_Msk
+    logger.debug("STATUS register updated: DATA bit cleared")
+    return value
 
 ## Read user registers (the VSI User Registers)
 #  @param index user register index (zero based)
@@ -241,7 +315,11 @@ def rdRegs(index):
     global Regs
     logger.info("Python function rdRegs() called")
 
-    value = Regs[index]
+    if index == 0:
+        value = rdSTATUS()
+    else:
+        value = Regs[index]
+
     logger.debug("Read user register at index {}: {}".format(index, value))
 
     return value
@@ -255,13 +333,13 @@ def wrRegs(index, value):
     global Regs
     logger.info("Python function wrRegs() called")
 
-    if   index == 0:
+    if   index == 1:
         wrCONTROL(value)
-    elif index == 1:
-        wrCHANNELS(value)
     elif index == 2:
-        wrSAMPLE_BITS(value)
+        wrCHANNELS(value)
     elif index == 3:
+        wrSAMPLE_BITS(value)
+    elif index == 4:
         wrSAMPLE_RATE(value)
 
     Regs[index] = value
