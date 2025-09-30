@@ -48,6 +48,7 @@ layer:
       files:
         - file: ./main.c
         - file: ./main.h
+        - file: ./ethos_setup.c
         - file: ./retarget_stdio.c
 
   linker:

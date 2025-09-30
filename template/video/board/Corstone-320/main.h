@@ -27,6 +27,10 @@ extern "C" {
 extern int app_main (void);
 extern int stdio_init (void);
 
+#if defined(ETHOSU_ARCH)
+extern void ethos_setup (void);
+#endif
+
 #ifdef __cplusplus
 }
 #endif
