@@ -68,11 +68,11 @@ LOAD_REGION_0       0x00000000                  0x00080000
     isram.bin       0x31000000  UNINIT ALIGN 16 0x00200000
     {
         ; Cache area (if used)
-        *.o (.bss.NoInit.ethos_u_cache)
+        *.o (ethos_cache_buf)
 
         ; activation buffers a.k.a tensor arena when
         ; memory mode sram only or shared sram
-        *.o (.bss.NoInit.activation_buf_sram)
+        *.o (.bss.activation_buf)
     }
 }
 
@@ -100,6 +100,8 @@ LOAD_REGION_1       0x70000000                  0x02000000
 
         ; activation buffers a.k.a tensor arena when memory mode dedicated sram
         *.o (activation_buf_dram)
+
+        *.o (.bss*)
     }
 
     ;-----------------------------------------------------
