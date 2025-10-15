@@ -33,7 +33,7 @@
 
 /* Compile-time configuration */
 #ifndef UART_BAUDRATE
-#define UART_BAUDRATE     15200
+#define UART_BAUDRATE     115200
 #endif
 
 /* References to the external retarget functions */

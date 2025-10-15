@@ -37,6 +37,7 @@ layer:
 
     - component: CMSIS-Compiler:CORE
     - component: CMSIS-Compiler:STDERR:Custom
+    - component: CMSIS-Compiler:STDIN:Custom
     - component: CMSIS-Compiler:STDOUT:Custom
 
     - component: Device:Definition
@@ -55,4 +56,4 @@ layer:
         - file: ./retarget_stdio.c
 
   linker:
-    - script: ./mps4-sse-315.sct
+    - regions: ./regions_SSE-315.h

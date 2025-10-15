@@ -25,6 +25,7 @@ layer:
   packs:
     - pack: ARM::CMSIS
     - pack: ARM::CMSIS-Compiler@^2.1.0
+    - pack: ARM::ethos-u-core-driver@^1.25.2
     - pack: ARM::AVH_FVP
     - pack: ARM::V2M_MPS3_SSE_300_BSP@1.5.0
 
@@ -39,6 +40,7 @@ layer:
 
     - component: CMSIS-Compiler:CORE
     - component: CMSIS-Compiler:STDERR:Custom
+    - component: CMSIS-Compiler:STDIN:Custom
     - component: CMSIS-Compiler:STDOUT:Custom
 
     - component: Device:Definition
@@ -60,4 +62,4 @@ layer:
         - file: ./retarget_stdio.c
 
   linker:
-    - script: ./mps3-sse-300.sct
+    - regions: ./regions_SSE-300.h
