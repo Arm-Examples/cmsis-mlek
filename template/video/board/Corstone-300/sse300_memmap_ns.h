@@ -1,14 +1,30 @@
-
+/*---------------------------------------------------------------------------
+ * Copyright (c) 2025 Arm Limited (or its affiliates).
+ * All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *---------------------------------------------------------------------------*/
 
 #ifndef SSE300_MEMMAP_NS_H
 #define SSE300_MEMMAP_NS_H
 
 /*============================================================================*/
-/*                           NON-SECURE MEMORY REGIONS                       */
+/*                           NON-SECURE MEMORY REGIONS                        */
 /*============================================================================*/
 
 /*---------------------------------------------------------------------------*/
-/*                        Non-Secure Code Regions                           */
+/*                        Non-Secure Code Regions                            */
 /*---------------------------------------------------------------------------*/
 
 /* ITCM - Non-Secure */
@@ -22,7 +38,7 @@
 #define FPGA_SRAM_NS_LIMIT              (FPGA_SRAM_NS_BASE + FPGA_SRAM_NS_SIZE - 1)
 
 /*---------------------------------------------------------------------------*/
-/*                         Non-Secure SRAM Regions                          */
+/*                         Non-Secure SRAM Regions                           */
 /*---------------------------------------------------------------------------*/
 
 /* DTCM - Non-Secure */
@@ -50,7 +66,7 @@
 #define QSPI_FLASH_NS_LIMIT             (QSPI_FLASH_NS_BASE + QSPI_FLASH_NS_SIZE - 1)
 
 /*---------------------------------------------------------------------------*/
-/*                        Non-Secure DDR4 Regions                           */
+/*                        Non-Secure DDR4 Regions                            */
 /*---------------------------------------------------------------------------*/
 
 /* DDR4 Region 0 - Non-Secure */
