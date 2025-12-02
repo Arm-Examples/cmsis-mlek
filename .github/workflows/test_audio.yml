@@ -1,0 +1,142 @@
+# SPDX-FileCopyrightText: Copyright 2022-2025 Arm Limited and/or its
+# affiliates <open-source-office@arm.com>
+# SPDX-License-Identifier: Apache-2.0
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+name: MLEK audio build and execution test
+on:
+
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/test_audio.yml  # Execute workflow when PR modifies this file
+      - template/audio/**                 # Execute workflow when PR modifies template/audio directory
+  push:
+    branches: [main]                      # Execute workflow when main branch is updated
+
+  #schedule:
+  #  - cron: '00 20 * * 6'
+
+
+jobs:
+  CI:
+    strategy:
+      matrix:
+        context: [
+          # {proj: kws,  build_type: Release-Live_Stream,  target_type: AVH-SSE-300,      model: FVP_Corstone_SSE-300_Ethos-U55,  fvp_dir: Corstone-300,  mps: mps3},
+          # {proj: kws,  build_type: Debug-Live_Stream,    target_type: AVH-SSE-300,      model: FVP_Corstone_SSE-300_Ethos-U55,  fvp_dir: Corstone-300,  mps: mps3},
+          {proj: kws,  build_type: Release-Data_Array,   target_type: AVH-SSE-300,      model: FVP_Corstone_SSE-300_Ethos-U55,  fvp_dir: Corstone-300,  mps: mps3},
+          {proj: kws,  build_type: Debug-Data_Array,     target_type: AVH-SSE-300,      model: FVP_Corstone_SSE-300_Ethos-U55,  fvp_dir: Corstone-300,  mps: mps3},
+
+          # {proj: kws,  build_type: Release-Live_Stream,  target_type: AVH-SSE-300-U55,  model: FVP_Corstone_SSE-300_Ethos-U55,  fvp_dir: Corstone-300,  mps: mps3},
+          # {proj: kws,  build_type: Debug-Live_Stream,    target_type: AVH-SSE-300-U55,  model: FVP_Corstone_SSE-300_Ethos-U55,  fvp_dir: Corstone-300,  mps: mps3},
+          {proj: kws,  build_type: Release-Data_Array,   target_type: AVH-SSE-300-U55,  model: FVP_Corstone_SSE-300_Ethos-U55,  fvp_dir: Corstone-300,  mps: mps3},
+          {proj: kws,  build_type: Debug-Data_Array,     target_type: AVH-SSE-300-U55,  model: FVP_Corstone_SSE-300_Ethos-U55,  fvp_dir: Corstone-300,  mps: mps3},
+
+          # {proj: kws,  build_type: Release-Live_Stream,  target_type: AVH-SSE-300-U65,  model: FVP_Corstone_SSE-300_Ethos-U65,  fvp_dir: Corstone-300,  mps: mps3},
+          # {proj: kws,  build_type: Debug-Live_Stream,    target_type: AVH-SSE-300-U65,  model: FVP_Corstone_SSE-300_Ethos-U65,  fvp_dir: Corstone-300,  mps: mps3},
+          {proj: kws,  build_type: Release-Data_Array,   target_type: AVH-SSE-300-U65,  model: FVP_Corstone_SSE-300_Ethos-U65,  fvp_dir: Corstone-300,  mps: mps3},
+          {proj: kws,  build_type: Debug-Data_Array,     target_type: AVH-SSE-300-U65,  model: FVP_Corstone_SSE-300_Ethos-U65,  fvp_dir: Corstone-300,  mps: mps3},
+
+          # {proj: kws,  build_type: Release-Live_Stream,  target_type: AVH-SSE-310,      model: FVP_Corstone_SSE-310,            fvp_dir: Corstone-310,  mps: mps3},
+          # {proj: kws,  build_type: Debug-Live_Stream,    target_type: AVH-SSE-310,      model: FVP_Corstone_SSE-310,            fvp_dir: Corstone-310,  mps: mps3},
+          {proj: kws,  build_type: Release-Data_Array,   target_type: AVH-SSE-310,      model: FVP_Corstone_SSE-310,            fvp_dir: Corstone-310,  mps: mps3},
+          {proj: kws,  build_type: Debug-Data_Array,     target_type: AVH-SSE-310,      model: FVP_Corstone_SSE-310,            fvp_dir: Corstone-310,  mps: mps3},
+
+          # {proj: kws,  build_type: Release-Live_Stream,  target_type: AVH-SSE-310-U55,  model: FVP_Corstone_SSE-310,            fvp_dir: Corstone-310,  mps: mps3},
+          # {proj: kws,  build_type: Debug-Live_Stream,    target_type: AVH-SSE-310-U55,  model: FVP_Corstone_SSE-310,            fvp_dir: Corstone-310,  mps: mps3},
+          {proj: kws,  build_type: Release-Data_Array,   target_type: AVH-SSE-310-U55,  model: FVP_Corstone_SSE-310,            fvp_dir: Corstone-310,  mps: mps3},
+          {proj: kws,  build_type: Debug-Data_Array,     target_type: AVH-SSE-310-U55,  model: FVP_Corstone_SSE-310,            fvp_dir: Corstone-310,  mps: mps3},
+
+          # {proj: kws,  build_type: Release-Live_Stream,  target_type: AVH-SSE-310-U65,  model: FVP_Corstone_SSE-310_Ethos-U65,  fvp_dir: Corstone-310,  mps: mps3},
+          # {proj: kws,  build_type: Debug-Live_Stream,    target_type: AVH-SSE-310-U65,  model: FVP_Corstone_SSE-310_Ethos-U65,  fvp_dir: Corstone-310,  mps: mps3},
+          {proj: kws,  build_type: Release-Data_Array,   target_type: AVH-SSE-310-U65,  model: FVP_Corstone_SSE-310_Ethos-U65,  fvp_dir: Corstone-310,  mps: mps3},
+          {proj: kws,  build_type: Debug-Data_Array,     target_type: AVH-SSE-310-U65,  model: FVP_Corstone_SSE-310_Ethos-U65,  fvp_dir: Corstone-310,  mps: mps3},
+
+          # {proj: kws,  build_type: Release-Live_Stream,  target_type: AVH-SSE-315,      model: FVP_Corstone_SSE-315,            fvp_dir: Corstone-315,  mps: mps4},
+          # {proj: kws,  build_type: Debug-Live_Stream,    target_type: AVH-SSE-315,      model: FVP_Corstone_SSE-315,            fvp_dir: Corstone-315,  mps: mps4},
+          {proj: kws,  build_type: Release-Data_Array,   target_type: AVH-SSE-315,      model: FVP_Corstone_SSE-315,            fvp_dir: Corstone-315,  mps: mps4},
+          {proj: kws,  build_type: Debug-Data_Array,     target_type: AVH-SSE-315,      model: FVP_Corstone_SSE-315,            fvp_dir: Corstone-315,  mps: mps4},
+
+          # {proj: kws,  build_type: Release-Live_Stream,  target_type: AVH-SSE-315-U65,  model: FVP_Corstone_SSE-315,            fvp_dir: Corstone-315,  mps: mps4},
+          # {proj: kws,  build_type: Debug-Live_Stream,    target_type: AVH-SSE-315-U65,  model: FVP_Corstone_SSE-315,            fvp_dir: Corstone-315,  mps: mps4},
+          {proj: kws,  build_type: Release-Data_Array,   target_type: AVH-SSE-315-U65,  model: FVP_Corstone_SSE-315,            fvp_dir: Corstone-315,  mps: mps4},
+          {proj: kws,  build_type: Debug-Data_Array,     target_type: AVH-SSE-315-U65,  model: FVP_Corstone_SSE-315,            fvp_dir: Corstone-315,  mps: mps4},
+
+          # {proj: kws,  build_type: Release-Live_Stream,  target_type: AVH-SSE-320,      model: FVP_Corstone_SSE-320,            fvp_dir: Corstone-320,  mps: mps4},
+          # {proj: kws,  build_type: Debug-Live_Stream,    target_type: AVH-SSE-320,      model: FVP_Corstone_SSE-320,            fvp_dir: Corstone-320,  mps: mps4},
+          {proj: kws,  build_type: Release-Data_Array,   target_type: AVH-SSE-320,      model: FVP_Corstone_SSE-320,            fvp_dir: Corstone-320,  mps: mps4},
+          {proj: kws,  build_type: Debug-Data_Array,     target_type: AVH-SSE-320,      model: FVP_Corstone_SSE-320,            fvp_dir: Corstone-320,  mps: mps4},
+
+          # {proj: kws,  build_type: Release-Live_Stream,  target_type: AVH-SSE-320-U85,  model: FVP_Corstone_SSE-320,            fvp_dir: Corstone-320,  mps: mps4},
+          # {proj: kws,  build_type: Debug-Live_Stream,    target_type: AVH-SSE-320-U85,  model: FVP_Corstone_SSE-320,            fvp_dir: Corstone-320,  mps: mps4},
+          {proj: kws,  build_type: Release-Data_Array,   target_type: AVH-SSE-320-U85,  model: FVP_Corstone_SSE-320,            fvp_dir: Corstone-320,  mps: mps4},
+          {proj: kws,  build_type: Debug-Data_Array,     target_type: AVH-SSE-320-U85,  model: FVP_Corstone_SSE-320,            fvp_dir: Corstone-320,  mps: mps4}
+        ]
+
+      fail-fast: false
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout current repository
+      uses: actions/checkout@v6
+
+    - name: Install tools
+      uses: ARM-software/cmsis-actions/vcpkg@v1
+      with:
+        config: ".ci/vcpkg-configuration.json"
+
+    - name: Activate Arm tool license
+      uses: ARM-software/cmsis-actions/armlm@v1
+
+    - name: Initialize CMSIS pack root folder
+      run: |
+        cpackget init https://www.keil.com/pack/index.pidx
+        cpackget update-index
+
+    - name: Add local CMSIS packs
+      run: |
+        cpackget add ./ARM.CMSIS-MLEK.pdsc
+
+    - name: Build Test
+      working-directory: ./template/audio
+      run: |
+        cbuild mlek_audio.csolution.yml --update-rte --packs --no-schema-check \
+        --context ${{matrix.context.proj}}.${{matrix.context.build_type}}+${{matrix.context.target_type}} \
+        --toolchain AC6 --rebuild
+
+    - name: Execution Test
+      working-directory: ./template/audio
+      run: |
+        ${{ matrix.context.model }} \
+        -a ./out/${{matrix.context.proj}}/${{matrix.context.target_type}}/${{matrix.context.build_type}}/${{matrix.context.proj}}.axf \
+        -f ./board/${{matrix.context.fvp_dir}}/fvp_config.txt \
+        -C ${{matrix.context.mps}}_board.telnetterminal0.start_telnet=0 \
+        -C ${{matrix.context.mps}}_board.uart0.out_file=stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}.log \
+        --simlimit 30
+
+    - name: Show and check FVP UART output
+      working-directory: ./template/audio
+      run: |
+        echo "Show FVP UART output..."
+        cat stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}.log
+        echo "Checking FVP UART output..."
+        test "$(grep "FAIL: " stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}.log | wc -l)" -eq 0
+
+    - name: Upload FVP UART output log
+      uses: actions/upload-artifact@v4
+      with:
+        name: stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}.log
+        path: ./template/audio/stdout_${{matrix.context.build_type}}_${{matrix.context.target_type}}.log
