@@ -61,7 +61,7 @@ static uint8_t ethos_cache[ETHOS_CACHE_BUF_SIZE] ETHOS_CACHE_BUF_ATTRIBUTES;
 /*
   Ethos NPU interrupt handler.
 */
-void NPU0_Handler(void) {
+void ETHOS_U55_Handler (void) {
   ethosu_irq_handler(&EthosDriver);
 }
 

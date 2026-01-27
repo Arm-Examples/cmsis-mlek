@@ -8,10 +8,12 @@ layer:
     - connect: Corstone-300-U55
       provides:
         - CMSIS_USART
+        - CMSIS_VIO
         - CMSIS_VSTREAM_AUDIO_IN
         - CMSIS_VSTREAM_AUDIO_OUT
         - CMSIS_VSTREAM_VIDEO_IN
         - CMSIS_VSTREAM_VIDEO_OUT
+        - STDIN
         - STDOUT
         - STDERR
         - Heap: 786432
@@ -26,17 +28,14 @@ layer:
     - pack: ARM::CMSIS
     - pack: ARM::CMSIS-Compiler@^2.1.0
     - pack: ARM::ethos-u-core-driver@^1.25.2
-    - pack: ARM::AVH_FVP
     - pack: ARM::V2M_MPS3_SSE_300_BSP@1.5.0
 
   components:
     - component: CMSIS:CORE
 
     - component: CMSIS Driver:USART
-    - component: CMSIS Driver:vStream:AudioIn
-    - component: CMSIS Driver:vStream:AudioOut
-    - component: CMSIS Driver:vStream:VideoIn
-    - component: CMSIS Driver:vStream:VideoOut
+    - component: CMSIS Driver:VIO
+    - component: CMSIS Driver:vStream:Custom
 
     - component: CMSIS-Compiler:CORE
     - component: CMSIS-Compiler:STDERR:Custom
@@ -60,6 +59,16 @@ layer:
         - file: ./main.h
         - file: ./ethos_setup.c
         - file: ./retarget_stdio.c
+
+    - group: vStream
+      add-path:
+        - ./RTE/CMSIS_Driver
+      files:
+        - file: ./vstream/include/arm_vsi.h
+        - file: ./vstream/vstream_audio_in.c
+        - file: ./vstream/vstream_audio_out.c
+        - file: ./vstream/vstream_video_in.c
+        - file: ./vstream/vstream_video_out.c
 
   linker:
     - regions: ./regions_SSE-300.h
