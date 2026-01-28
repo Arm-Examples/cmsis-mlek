@@ -1,35 +1,7 @@
-#  SPDX-FileCopyrightText: Copyright 2022-2025 Arm Limited and/or its
-#  affiliates <open-source-office@arm.com>
-#  SPDX-License-Identifier: Apache-2.0
-#
-#  Licensed under the Apache License, Version 2.0 (the "License");
-#  you may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
-
 project:
   packs:
     - pack: ARM::CMSIS@^6.2.0
-    - pack: ARM::CMSIS-DSP@^1.16.0
-    - pack: ARM::CMSIS-NN@^7.0.0
     - pack: ARM::CMSIS-RTX@^5.9.0
-
-    - pack: ARM::ethos-u-core-driver@^1.25.2
-
-    - pack: ARM::ml-embedded-eval-kit-uc-api@^24.8.0
-
-    - pack: tensorflow::flatbuffers@^1.25.2
-    - pack: tensorflow::gemmlowp@^1.25.2
-    - pack: tensorflow::kissfft@^1.25.2
-    - pack: tensorflow::ruy@^1.25.2
-    - pack: tensorflow::tensorflow-lite-micro@^1.25.2
 
   output:
     type:
@@ -64,61 +36,26 @@ project:
     - group: Audio Source
       files:
         # Audio source implementation using CMSIS audio interface
-        - file: src/AudioSource_Live.cpp
+        - file: src/AudioSource_Live.c
           for-context: \.*Live_Stream
         # Audio source implementation using data array
-        - file: src/AudioSource_WAV.cpp
+        - file: src/AudioSource_WAV.c
           for-context: \.*Data_Array
         # Audio sample ad data array
-        - file: src/sample_audio.cpp
+        - file: src/sample_audio.c
           for-context: \.*Data_Array
 
-    - group: Keyword Spotting ML models
+    - group: Configuration
       files:
-        # Model for devices with Ethos-U55 (128 macs)
-        - file: src/kws_micronet_m_vela_H128.tflite.cpp
-          for-context: \.*-U55-128.*
-        # Model for devices with Ethos-U55 (256 macs)
-        - file: src/kws_micronet_m_vela_H256.tflite.cpp
-          for-context: \.*-U55(-256)?(?!-\d{2,3}).*
-        # Model for devices with Ethos-U65 (256 macs)
-        - file: src/kws_micronet_m_vela_Y256.tflite.cpp
-          for-context: \.*-U65(-256)?(?!-\d{2,3}).*
-        # Model for devices with Ethos-U85 (256 macs)
-        - file: src/kws_micronet_m_vela_Z256.tflite.cpp
-          for-context: \.*-U85(-256)?(?!-\d{2,3}).*
-        # Model for devices without Ethos-U
-        - file: src/kws_micronet_m.tflite.cpp
-          not-for-context: \.*-U[0-9]{2}.*
-        # List of words that model recognizes
-        - file: src/Labels.cpp
+        - file: ./config/AppConfiguration.h
 
   components:
-    - component: CMSIS:DSP&Source
-    - component: CMSIS:NN Lib
     - component: CMSIS:OS Tick:SysTick
     - component: CMSIS:RTOS2:Keil RTX5&Source
 
-    - component: Data Exchange:Serialization:flatbuffers&tensorflow
-    - component: Data Processing:Math:gemmlowp fixed-point&tensorflow
-    - component: Data Processing:Math:kissfft&tensorflow
-    - component: Data Processing:Math:ruy&tensorflow
-
-    # TensorFlow Kernel variant for devices without Ethos-U
-    - component: Machine Learning:TensorFlow:Kernel&CMSIS-NN
-      not-for-context: \.*-U[0-9]{2}.*
-    # TensorFlow Kernel variant for devices with Ethos-U
-    - component: Machine Learning:TensorFlow:Kernel&Ethos-U
-      for-context: \.*-U[0-9]{2}.*
-
-    - component: Machine Learning:TensorFlow:Kernel Utils
-    - component: Machine Learning:TensorFlow:Testing
-
-    - component: ML Eval Kit:Common:API
-    - component: ML Eval Kit:Common:Log
-    - component: ML Eval Kit:Common:Math
-    - component: ML Eval Kit:Voice:Keyword spotting
-
   layers:
+    - layer: $SolutionDir()$/ML/ml_layer.clayer.yml
+      type: ML
+
     - layer: $Board-Layer$
       type: Board
