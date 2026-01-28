@@ -1,5 +1,5 @@
-/*---------------------------------------------------------------------------
- * Copyright (c) 2025 Arm Limited (or its affiliates). All rights reserved.
+/*
+ * Copyright 2025-2026 Arm Limited and/or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -14,10 +14,10 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *---------------------------------------------------------------------------*/
+ */
 
-#ifndef IMAGE_PROCESSING_FUNC_H__
-#define IMAGE_PROCESSING_FUNC_H__
+#ifndef IMAGE_PROCESSING_FUNC_H_
+#define IMAGE_PROCESSING_FUNC_H_
 
 #include <stdint.h>
 
@@ -222,4 +222,4 @@ void crop_rgb888_to_rgb888(const uint8_t *src,
 #ifdef __cplusplus
 }
 #endif
-#endif /* IMAGE_PROCESSING_FUNC_H__ */
+#endif /* IMAGE_PROCESSING_FUNC_H_ */
