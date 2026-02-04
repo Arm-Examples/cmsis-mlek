@@ -66,148 +66,158 @@ solution:
   target-types:
 
     # Arm Corstone-300 targets
-    - type: AVH-SSE-300
-      board: ARM::V2M-MPS3-SSE-300-FVP
-      device: ARM::SSE-300-MPS3
+    - type: SSE-300
+      board: V2M-MPS3-SSE-300-FVP
+      device: SSE-300-MPS3
       variables:
         - Board-Layer: ../board/Corstone-300/Board.clayer.yml
       target-set:
         - set:
           debugger:
-            name: AVH-FVP
-            model: FVP_Corstone_SSE-300
-            config: ./board/Corstone-300/fvp_config.txt
-            args:
-              - -C mps3_board.v_path=./board/Corstone-300/vsi/python/
+            name: Arm-FVP
+            model: FVP_Corstone_SSE-300_Ethos-U55
+            config-file: board/Corstone-300/fvp_config.txt
+            args: -C mps3_board.v_path=./board/Corstone-300/vsi/python/
+          images:
+            - project-context: inference_runner.Debug-UserModel
 
-    - type: AVH-SSE-300-U55
-      board: ARM::V2M-MPS3-SSE-300-FVP
-      device: ARM::SSE-300-MPS3
+    - type: SSE-300-U55
+      board: V2M-MPS3-SSE-300-FVP
+      device: SSE-300-MPS3
       variables:
         - Board-Layer: ../board/Corstone-300/Board-U55.clayer.yml
       target-set:
         - set:
           debugger:
-            name: AVH-FVP
+            name: Arm-FVP
             model: FVP_Corstone_SSE-300_Ethos-U55
-            config: ./board/Corstone-300/fvp_config.txt
-            args:
-              - -C mps3_board.v_path=./board/Corstone-300/vsi/python/
+            config-file: board/Corstone-300/fvp_config.txt
+            args: -C mps3_board.v_path=./board/Corstone-300/vsi/python/
+          images:
+            - project-context: inference_runner.Debug-UserModel
 
-    - type: AVH-SSE-300-U65
-      board: ARM::V2M-MPS3-SSE-300-FVP
-      device: ARM::SSE-300-MPS3
+    - type: SSE-300-U65
+      board: V2M-MPS3-SSE-300-FVP
+      device: SSE-300-MPS3
       variables:
         - Board-Layer: ../board/Corstone-300/Board-U65.clayer.yml
       target-set:
         - set:
           debugger:
-            name: AVH-FVP
+            name: Arm-FVP
             model: FVP_Corstone_SSE-300_Ethos-U65
-            config: ./board/Corstone-300/fvp_config.txt
-            args:
-              - -C mps3_board.v_path=./board/Corstone-300/vsi/python/
+            config-file: ./board/Corstone-300/fvp_config.txt
+            args: -C mps3_board.v_path=./board/Corstone-300/vsi/python/
+          images:
+            - project-context: inference_runner.Debug-UserModel
 
     # Arm Corstone-310 targets
-    - type: AVH-SSE-310
-      board: ARM::V2M-MPS3-SSE-310
-      device: ARM::SSE-310-MPS3_FVP
+    - type: SSE-310
+      board: V2M-MPS3-SSE-310
+      device: SSE-310-MPS3_FVP
       variables:
         - Board-Layer: ../board/Corstone-310/Board.clayer.yml
       target-set:
         - set:
           debugger:
-            name: AVH-FVP
+            name: Arm-FVP
             model: FVP_Corstone_SSE-310
-            config: ./board/Corstone-310/fvp_config.txt
-            args:
-              - -C mps3_board.v_path=./board/Corstone-310/vsi/python/
+            config-file: ./board/Corstone-310/fvp_config.txt
+            args: -C mps3_board.v_path=./board/Corstone-310/vsi/python/
+          images:
+            - project-context: inference_runner.Debug-UserModel
 
-    - type: AVH-SSE-310-U55
-      board: ARM::V2M-MPS3-SSE-310
-      device: ARM::SSE-310-MPS3_FVP
+    - type: SSE-310-U55
+      board: V2M-MPS3-SSE-310
+      device: SSE-310-MPS3_FVP
       variables:
         - Board-Layer: ../board/Corstone-310/Board-U55.clayer.yml
       target-set:
         - set:
           debugger:
-            name: AVH-FVP
+            name: Arm-FVP
             model: FVP_Corstone_SSE-310
-            config: ./board/Corstone-310/fvp_config.txt
-            args:
-              - -C mps3_board.v_path=./board/Corstone-310/vsi/python/
+            config-file: ./board/Corstone-310/fvp_config.txt
+            args: -C mps3_board.v_path=./board/Corstone-310/vsi/python/
+          images:
+            - project-context: inference_runner.Debug-UserModel
 
-    - type: AVH-SSE-310-U65
-      board: ARM::V2M-MPS3-SSE-310
-      device: ARM::SSE-310-MPS3_FVP
+    - type: SSE-310-U65
+      board: V2M-MPS3-SSE-310
+      device: SSE-310-MPS3_FVP
       variables:
         - Board-Layer: ../board/Corstone-310/Board-U65.clayer.yml
       target-set:
         - set:
           debugger:
-            name: AVH-FVP
+            name: Arm-FVP
             model: FVP_Corstone_SSE-310_Ethos-U65
-            config: ./board/Corstone-310/fvp_config.txt
-            args:
-              - -C mps3_board.v_path=./board/Corstone-310/vsi/python/
+            config-file: ./board/Corstone-310/fvp_config.txt
+            args: -C mps3_board.v_path=./board/Corstone-310/vsi/python/
+          images:
+            - project-context: inference_runner.Debug-UserModel
 
     # Arm Corstone-315 targets
-    - type: AVH-SSE-315
-      board: ARM::SSE-315
-      device: ARM::SSE-315-FVP
+    - type: SSE-315
+      board: SSE-315
+      device: SSE-315-FVP
       variables:
         - Board-Layer: ../board/Corstone-315/Board.clayer.yml
       target-set:
         - set:
           debugger:
-            name: AVH-FVPU65
+            name: Arm-FVP
             model: FVP_Corstone_SSE-315
-            config: ./board/Corstone-315/fvp_config.txt
-            args:
-              - -C mps4_board.v_path=./board/Corstone-315/vsi/python/
+            config-file: ./board/Corstone-315/fvp_config.txt
+            args: -C mps4_board.v_path=./board/Corstone-315/vsi/python/
+          images:
+            - project-context: inference_runner.Debug-UserModel
 
-    - type: AVH-SSE-315-U65
-      board: ARM::SSE-315
-      device: ARM::SSE-315-FVP
+    - type: SSE-315-U65
+      board: SSE-315
+      device: SSE-315-FVP
       variables:
         - Board-Layer: ../board/Corstone-315/Board-U65.clayer.yml
       target-set:
         - set:
           debugger:
-            name: AVH-FVP
+            name: Arm-FVP
             model: FVP_Corstone_SSE-315
-            config: ./board/Corstone-315/fvp_config.txt
-            args:
-              - -C mps4_board.v_path=./board/Corstone-315/vsi/python/
+            config-file: ./board/Corstone-315/fvp_config.txt
+            args: -C mps4_board.v_path=./board/Corstone-315/vsi/python/
+          images:
+            - project-context: inference_runner.Debug-UserModel
 
     # Arm Corstone-320 targets
-    - type: AVH-SSE-320
-      board: ARM::SSE-320
-      device: ARM::SSE-320-FVP
+    - type: SSE-320
+      board: SSE-320
+      device: SSE-320-FVP
       variables:
         - Board-Layer: ../board/Corstone-320/Board.clayer.yml
       target-set:
         - set:
           debugger:
-            name: AVH-FVP
+            name: Arm-FVP
             model: FVP_Corstone_SSE-320
-            config: ./board/Corstone-320/fvp_config.txt
-            args:
-              - -C mps4_board.v_path=./board/Corstone-320/vsi/python/
+            config-file: ./board/Corstone-320/fvp_config.txt
+            args: -C mps4_board.v_path=./board/Corstone-320/vsi/python/
+          images:
+            - project-context: inference_runner.Debug-UserModel
 
-    - type: AVH-SSE-320-U85
-      board: ARM::SSE-320
-      device: ARM::SSE-320-FVP
+    - type: SSE-320-U85
+      board: SSE-320
+      device: SSE-320-FVP
       variables:
         - Board-Layer: ../board/Corstone-320/Board-U85.clayer.yml
       target-set:
         - set:
           debugger:
-            name: AVH-FVP
+            name: Arm-FVP
             model: FVP_Corstone_SSE-320
-            config: ./board/Corstone-320/fvp_config.txt
-            args:
-              - -C mps4_board.v_path=./board/Corstone-320/vsi/python/
+            config-file: ./board/Corstone-320/fvp_config.txt
+            args: -C mps4_board.v_path=./board/Corstone-320/vsi/python/
+          images:
+            - project-context: inference_runner.Debug-UserModel
 
   projects:
     # Generic ML Project

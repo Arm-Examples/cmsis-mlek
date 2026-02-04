@@ -65,7 +65,7 @@ solution:
   target-types:
 
     # Arm Corstone-300 targets
-    - type: SSE-300-MPS3
+    - type: SSE-300
       board: V2M-MPS3-SSE-300-FVP
       device: SSE-300-MPS3
       variables:
@@ -80,7 +80,7 @@ solution:
           images:
             - project-context: object-detection.Debug-Data_Array
 
-    - type: SSE-300-MPS3-U55
+    - type: SSE-300-U55
       board: V2M-MPS3-SSE-300-FVP
       device: SSE-300-MPS3
       variables:
@@ -95,7 +95,7 @@ solution:
           images:
             - project-context: object-detection.Debug-Data_Array
 
-    - type: SSE-300-MPS3-U65
+    - type: SSE-300-U65
       board: V2M-MPS3-SSE-300-FVP
       device: SSE-300-MPS3
       variables:
@@ -111,7 +111,7 @@ solution:
             - project-context: object-detection.Debug-Data_Array
 
     # Arm Corstone-310 targets
-    - type: SSE-310-MPS3_FVP
+    - type: SSE-310
       board: V2M-MPS3-SSE-310
       device: SSE-310-MPS3_FVP
       variables:
@@ -126,7 +126,7 @@ solution:
           images:
             - project-context: object-detection.Debug-Data_Array
 
-    - type: SSE-310-MPS3_FVP-U55
+    - type: SSE-310-U55
       board: V2M-MPS3-SSE-310
       device: SSE-310-MPS3_FVP
       variables:
@@ -141,7 +141,7 @@ solution:
           images:
             - project-context: object-detection.Debug-Data_Array
 
-    - type: SSE-310-MPS3_FVP-U65
+    - type: SSE-310-U65
       board: V2M-MPS3-SSE-310
       device: SSE-310-MPS3_FVP
       variables:
@@ -157,7 +157,7 @@ solution:
             - project-context: object-detection.Debug-Data_Array
 
     # Arm Corstone-315 targets
-    - type: SSE-315-FVP
+    - type: SSE-315
       board: SSE-315
       device: SSE-315-FVP
       variables:
@@ -172,7 +172,7 @@ solution:
           images:
             - project-context: object-detection.Debug-Data_Array
 
-    - type: SSE-315-FVP-U65
+    - type: SSE-315-U65
       board: SSE-315
       device: SSE-315-FVP
       variables:
@@ -188,7 +188,7 @@ solution:
             - project-context: object-detection.Debug-Data_Array
 
     # Arm Corstone-320 targets
-    - type: SSE-320-FVP
+    - type: SSE-320
       board: SSE-320
       device: SSE-320-FVP
       variables:
@@ -203,7 +203,7 @@ solution:
           images:
             - project-context: object-detection.Debug-Data_Array
 
-    - type: SSE-320-FVP-U85
+    - type: SSE-320-U85
       board: SSE-320
       device: SSE-320-FVP
       variables:
