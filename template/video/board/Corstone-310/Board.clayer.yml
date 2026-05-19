@@ -26,6 +26,7 @@ layer:
     - pack: ARM::CMSIS
     - pack: ARM::CMSIS-Compiler@^2.1.0
     - pack: ARM::V2M_MPS3_SSE_310_BSP@1.4.0
+    # TODO: bump when a newer ARM::V2M_MPS3_SSE_310_BSP 1.x release is published.
 
   components:
     - component: CMSIS:CORE

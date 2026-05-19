@@ -16,20 +16,21 @@
 
 project:
   packs:
-    - pack: ARM::CMSIS@^6.2.0
-    - pack: ARM::CMSIS-DSP@^1.16.0
+    - pack: ARM::CMSIS@^6.3.0
+    - pack: ARM::CMSIS-DSP@^1.17.0
     - pack: ARM::CMSIS-NN@^7.0.0
-    - pack: ARM::CMSIS-RTX@^5.9.0
+    # TODO: bump when a newer ARM::CMSIS-NN 7.x release is published.
+    - pack: ARM::CMSIS-RTX@^5.9.1
 
-    - pack: ARM::ethos-u-core-driver@^1.25.2
+    - pack: ARM::ethos-u-core-driver@^1.26.2
 
-    - pack: ARM::ml-embedded-eval-kit-uc-api@^24.8.0
+    - pack: ARM::ml-embedded-eval-kit-uc-api@^25.12.1
 
-    - pack: tensorflow::flatbuffers@^1.25.2
-    - pack: tensorflow::gemmlowp@^1.25.2
-    - pack: tensorflow::kissfft@^1.25.2
-    - pack: tensorflow::ruy@^1.25.2
-    - pack: tensorflow::tensorflow-lite-micro@^1.25.2
+    - pack: tensorflow::flatbuffers@^1.26.2
+    - pack: tensorflow::gemmlowp@^1.26.2
+    - pack: tensorflow::kissfft@^1.26.2
+    - pack: tensorflow::ruy@^1.26.2
+    - pack: tensorflow::tensorflow-lite-micro@^1.26.2
 
   output:
     type:

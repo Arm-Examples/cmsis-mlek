@@ -25,7 +25,7 @@ layer:
   packs:
     - pack: ARM::CMSIS
     - pack: ARM::CMSIS-Compiler@^2.1.0
-    - pack: ARM::SSE_320_BSP@1.0.0
+    - pack: ARM::SSE_320_BSP@1.1.0
 
   components:
     - component: CMSIS:CORE

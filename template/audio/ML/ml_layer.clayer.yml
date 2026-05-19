@@ -1,18 +1,20 @@
+# TFLM is the active runtime today; this layer layout is prepared for future ExecuTorch runtime selection.
 layer:
   type: ML
   description: ML layer for Keyword Spotting using MicroNet ML model.
 
   packs:
-    - pack: ARM::CMSIS-DSP@^1.16.0
+    - pack: ARM::CMSIS-DSP@^1.17.0
     - pack: ARM::CMSIS-NN@^7.0.0
+    # TODO: bump when a newer ARM::CMSIS-NN 7.x release is published.
 
-    - pack: ARM::ml-embedded-eval-kit-uc-api@^24.8.0
+    - pack: ARM::ml-embedded-eval-kit-uc-api@^25.12.1
 
-    - pack: tensorflow::flatbuffers@^1.25.2
-    - pack: tensorflow::gemmlowp@^1.25.2
-    - pack: tensorflow::kissfft@^1.25.2
-    - pack: tensorflow::ruy@^1.25.2
-    - pack: tensorflow::tensorflow-lite-micro@^1.25.2
+    - pack: tensorflow::flatbuffers@^1.26.2
+    - pack: tensorflow::gemmlowp@^1.26.2
+    - pack: tensorflow::kissfft@^1.26.2
+    - pack: tensorflow::ruy@^1.26.2
+    - pack: tensorflow::tensorflow-lite-micro@^1.26.2
 
   connections:
     - connect: Layer with CMSIS-RTOS2
@@ -42,6 +44,15 @@ layer:
     - component: ML Eval Kit:Common:Log
     - component: ML Eval Kit:Common:Math
     - component: ML Eval Kit:Voice:Keyword spotting
+
+  # --- ExecuTorch runtime (future) ---
+  # packs:
+  #   - pack: executorch::executorch@^0.5.0
+  #   - pack: executorch::kernels-portable@^0.5.0
+  #   - pack: executorch::ethosu-backend@^0.5.0
+  # components:
+  #   - component: Machine Learning:Runtime:ExecuTorch
+  #     for-context: \.*-ExecuTorch.*
 
   add-path:
     - ./model
