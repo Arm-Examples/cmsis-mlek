@@ -10,7 +10,7 @@ Key Features:
 - **Performance Validation**: Test and optimize ML performance on target hardware or simulation.
 - **Hardware Evaluation**: Compare performance across different Corstone platforms and configurations.
 
-The CMSIS-MLEK software pack is derived from the [Arm® ML embedded evaluation kit](https://git.gitlab.arm.com/artificial-intelligence/ethos-u/ml-embedded-evaluation-kit) and makes the examples easier to access. It also contains interfaces to physical hardware and simplifies porting to target hardware. It contains the following ML applications and uses currently Neural Network Models currently in [TensorFlow Lite](https://www.keil.arm.com/packs/tensorflow-lite-micro-tensorflow) format.
+The CMSIS-MLEK software pack is derived from the [Arm® ML embedded evaluation kit](https://git.gitlab.arm.com/artificial-intelligence/ethos-u/ml-embedded-evaluation-kit) and makes the examples easier to access. It also contains interfaces to physical hardware and simplifies porting to target hardware. It contains the following ML applications and currently uses [TensorFlow Lite Micro](https://www.keil.arm.com/packs/tensorflow-lite-micro-tensorflow) as the active runtime. [ExecuTorch](https://pytorch.org/executorch/) runtime support, including the [Arm Ethos-U backend](https://github.com/pytorch/executorch/tree/main/backends/arm), is planned in follow-up work.
 
 | ML application                                 | Description             |  Neural Network Model |
 |:-----------------------------------------------|:------------------------|:----------------------|
@@ -46,6 +46,11 @@ The templates support via _target names_ multiple [Arm Cortex-M IP Subsystems](h
 | AVH-SSE-310  | [Corstone-310](https://developer.arm.com/Processors/Corstone-310) | Cortex-M85 optional with Ethos-U55 |
 | AVH-SSE-315  | [Corstone-315](https://developer.arm.com/Processors/Corstone-315) | Cortex-M85 optional with Ethos-U65 |
 | AVH-SSE-320  | [Corstone-320](https://developer.arm.com/Processors/Corstone-320) | Cortex-M85 optional with Ethos-U85 |
+
+## Runtime Support
+
+- [TensorFlow Lite Micro](https://www.keil.arm.com/packs/tensorflow-lite-micro-tensorflow) is currently supported and enabled by default.
+- [ExecuTorch](https://pytorch.org/executorch/) support is planned in follow-up work, including the [Arm Ethos-U backend](https://github.com/pytorch/executorch/tree/main/backends/arm).
 
 Adding a postfix to the _target name_ in the `*.csolution.yml` project file configures the neural network inference pipeline for Ethos-U. Without this prefix only the Cortex-M system is used as shown in the diagram below. Such a postfix can also be used for _target names_ that deploy to physical hardware.
 

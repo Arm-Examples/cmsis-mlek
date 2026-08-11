@@ -15,6 +15,7 @@ layer:
   packs:
     - pack: ARM::CMSIS
     - pack: ARM::SSE_315_BSP@1.0.0
+    # TODO: bump when a newer ARM::SSE_315_BSP 1.x release is published.
 
   components:
     - component: ARM::CMSIS:CORE

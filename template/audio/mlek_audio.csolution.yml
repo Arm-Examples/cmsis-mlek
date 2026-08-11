@@ -15,7 +15,7 @@
 #  limitations under the License.
 
 solution:
-  created-for: CMSIS-Toolbox@2.12.0
+  created-for: CMSIS-Toolbox@2.15.0
   cdefault:
 
   select-compiler:
@@ -32,9 +32,12 @@ solution:
 
   packs:
     - pack: ARM::V2M_MPS3_SSE_300_BSP@^1.5.0
+    # TODO: bump when a newer ARM::V2M_MPS3_SSE_300_BSP 1.x release is published.
     - pack: ARM::V2M_MPS3_SSE_310_BSP@^1.4.0
+    # TODO: bump when a newer ARM::V2M_MPS3_SSE_310_BSP 1.x release is published.
     - pack: ARM::SSE_315_BSP@^1.0.0
-    - pack: ARM::SSE_320_BSP@^1.0.0
+    # TODO: bump when a newer ARM::SSE_315_BSP 1.x release is published.
+    - pack: ARM::SSE_320_BSP@^1.1.0
 
   build-types:
     - type: Debug-Live_Stream
@@ -52,6 +55,12 @@ solution:
     - type: Release-Data_Array
       debug: off
       optimize: speed
+
+  # Future runtime selection placeholder (TFLM remains the default):
+  # build-types:
+  #   - type: Release-ExecuTorch
+  #     debug: off
+  #     optimize: speed
 
   # The target types use the naming convention <name>-<NPU family>-<NPU MACs> where:
   # - <name> can be arbitrary name

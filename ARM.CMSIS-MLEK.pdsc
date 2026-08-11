@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package schemaVersion="1.7.40" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.40/schema/PACK.xsd">
+<package schemaVersion="1.7.56" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.56/schema/PACK.xsd">
   <vendor>ARM</vendor>
   <name>CMSIS-MLEK</name>
   <description overview="overview/README.md">Machine Learning Evaluation Kit (MLEK) for CMSIS workflows</description>
@@ -9,6 +9,10 @@
   <repository type="git">https://github.com/Arm-Examples/cmsis-mlek.git</repository>
 
   <releases>
+    <release version="1.1.0" date="2026-05-19">
+      Updated dependencies to latest pack versions.
+      Prepared layer structure for ExecuTorch runtime support (TFLM remains the default).
+    </release>
     <release version="1.0.0-dev">
       Active Development ...
     </release>

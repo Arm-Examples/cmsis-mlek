@@ -13,7 +13,7 @@ This repository contains **Machine Learning Evaluation Kit (MLEK)** pack which p
 
 The provided applications implement data preprocessing, memory management, and neural network inference pipelines that are optimized for Cortex-M and Ethos-U platforms. The examples are prepared to run with [Keil Studio](https://mdk-packs.github.io/vscode-cmsis-solution-docs/index.html).
 
-The CMSIS-MLEK software pack is derived from the [Arm® ML embedded evaluation kit](https://git.gitlab.arm.com/artificial-intelligence/ethos-u/ml-embedded-evaluation-kit) and makes the examples easier to access. It also contains interfaces to physical hardware and simplifies porting to target hardware. It contains the following ML applications and uses currently Neural Network Models currently in [TensorFlow Lite](https://www.keil.arm.com/packs/tensorflow-lite-micro-tensorflow) format.
+The CMSIS-MLEK software pack is derived from the [Arm® ML embedded evaluation kit](https://git.gitlab.arm.com/artificial-intelligence/ethos-u/ml-embedded-evaluation-kit) and makes the examples easier to access. It also contains interfaces to physical hardware and simplifies porting to target hardware. It contains the following ML applications and currently uses [TensorFlow Lite Micro](https://www.keil.arm.com/packs/tensorflow-lite-micro-tensorflow) as the active runtime. [ExecuTorch](https://pytorch.org/executorch/) runtime support, including the [Arm Ethos-U backend](https://github.com/pytorch/executorch/tree/main/backends/arm), is planned in follow-up work.
 
 | ML application                                 | Description                                           | Neural Network Model
 |------------------------------------------------|-------------------------------------------------------|---------------------
@@ -47,6 +47,7 @@ Refer to [Overview](./overview/README.md) for more details.
 
 - [CMSIS-MLEK Pack](https://www.keil.arm.com/packs/cmsis-mlek-arm) available on [keil.arm.com/packs](https://www.keil.arm.com/packs).
 - [tensorflow-lite-micro Pack](https://www.keil.arm.com/packs/tensorflow-lite-micro-tensorflow) available on [keil.arm.com/packs](https://www.keil.arm.com/packs).
+- [ExecuTorch](https://pytorch.org/executorch/) runtime project with the [Arm Ethos-U backend](https://github.com/pytorch/executorch/tree/main/backends/arm).
 - [CMSIS-MLEK Examples](https://github.com/Arm-Examples/cmsis-mlek-examples) a repository with MLEK applications that are configured for evaluation boards and use cases.
 - [ML Developers Guide for Cortex-M Processors and Ethos-U NPU](https://developer.arm.com/documentation/109267).
 - [Arm Virtual Hardware - FVP](https://github.com/arm-software/avh) repository with [documentation](https://arm-software.github.io/AVH/main/overview/html/index.html).
